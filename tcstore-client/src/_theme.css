@@ -1,0 +1,7 @@
+/* Common theme styles */
+:root {
+    --theme-colors-main: #373737;
+    --theme-colors-main2: #ea2525;
+    --theme-colors-main3: rgb(120, 119, 119);
+    --theme-colors-pink: #d28de5;
+}
