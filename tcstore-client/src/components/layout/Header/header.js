@@ -99,6 +99,11 @@ function Topbar() {
     setVisibleDrawer(false);
   };
 
+  const gotoTop = () => {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -134,7 +139,10 @@ function Topbar() {
                 <Col className="btn-st">
                   <button
                     className="btn-sty"
-                    onClick={() => handleLink("/home#categories")}
+                    onClick={() => {
+                        handleLink("/home");
+                        gotoTop();
+                    }}
                   >
                     Danh mục
                   </button>

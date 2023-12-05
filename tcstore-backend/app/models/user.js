@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, default: '' },
     password: { type: String, require: true },
     role: { type: String, default: '' },
-    status: { type: String, default: 'noactive' },
+    status: { type: String, default: 'active' },
     image: {type: String, default: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'}
 }, { timestamps: true }, { collection: 'users' })
 
