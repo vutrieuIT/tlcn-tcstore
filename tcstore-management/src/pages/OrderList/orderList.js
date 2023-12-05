@@ -118,8 +118,7 @@ const OrderList = () => {
             message: `Thông báo`,
             description: "Cập nhật thành công",
           });
-          //   handleCategoryList();
-          getOrderList();
+          handleCategoryList();
           setOpenModalUpdate(false);
         }
       });
@@ -140,7 +139,7 @@ const OrderList = () => {
 
   const handleCategoryList = async () => {
     try {
-      await orderApi.getListOrder().then((res) => {
+      await orderApi.getListOrder({ page: 1, limit: 1000 }).then((res) => {
         console.log(res);
         setTotalList(res.totalDocs);
         setOrder(res.data.docs);
@@ -305,20 +304,20 @@ const OrderList = () => {
     },
   ];
 
-  const getOrderList = async () => {
-    try {
-      await orderApi.getListOrder({ page: 1, limit: 1000 }).then((res) => {
-        console.log(res);
-        setTotalList(res.totalDocs);
-        setOrder(res.data.docs);
-        setLoading(false);
-      });
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
-    }
-  };
-
-  useEffect(() => getOrderList(), []);
+  useEffect(() => {
+    (async () => {
+      try {
+        await orderApi.getListOrder({ page: 1, limit: 1000 }).then((res) => {
+          console.log(res);
+          setTotalList(res.totalDocs);
+          setOrder(res.data.docs);
+          setLoading(false);
+        });
+      } catch (error) {
+        console.log("Failed to fetch event list:" + error);
+      }
+    })();
+  }, []);
   return (
     <div>
       <Spin spinning={loading}>
