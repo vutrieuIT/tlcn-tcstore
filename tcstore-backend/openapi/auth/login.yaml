@@ -1,0 +1,27 @@
+post: 
+      operationId: authController.login
+      summary: login
+      description: login
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              properties: 
+                email:
+                  type: string
+                  format: email
+                  example: user@email.com
+                password:
+                  type: string
+                  example: "123456"
+      responses: 
+        "200":
+          description: login success
+        "400":
+          description: login fail
+          content: 
+            application/json:
+              schema: 
+                type: object
+                $ref: "../openAPI.yaml#/components/schemas/messageReponse"
