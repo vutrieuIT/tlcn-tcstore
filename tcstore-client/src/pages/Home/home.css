@@ -963,6 +963,11 @@ ul {
     justify-content: space-between;
 }
 
+.menu-category:hover {
+    cursor: pointer;
+    background-color: hsla(59, 61%, 55%, 0.70);
+}
+
 .promotion1 {
     width: 100%;
     border-radius: 15px;
