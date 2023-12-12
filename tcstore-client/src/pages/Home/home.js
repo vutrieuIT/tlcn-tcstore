@@ -20,6 +20,7 @@ import service7 from "../../assets/image/service/service7.png";
 import service8 from "../../assets/image/service/service8.png";
 import service9 from "../../assets/image/service/service9.png";
 import service10 from "../../assets/image/service/service10.png";
+import ProductItem from "../../components/ProductItemComponent";
 
 import { useHistory } from "react-router-dom";
 import { RightOutlined, QrcodeOutlined } from "@ant-design/icons";
@@ -45,7 +46,7 @@ const gridStyle = {
   textAlign: "center",
 };
 
-const Home = () => {
+const Home = ({ keyWord }) => {
   const [event, setEvent] = useState([]);
   const [productList, setProductList] = useState([]);
   const [eventListHome, setEventListHome] = useState([]);
@@ -75,7 +76,7 @@ const Home = () => {
 
   const handleReadMore = (id) => {
     console.log(id);
-    history.push("product-detail/" + id);
+    history.push("/product-detail/" + id);
   };
 
   const handleClickCategory = async (id, categoryName) => {
@@ -107,6 +108,19 @@ const Home = () => {
 
     setProductsShow(dataPaginate);
   };
+
+  useEffect(() => {
+    console.log("keyword = ", keyWord);
+    if (keyWord == null || keyWord === "") {
+      renderItemList(1, products);
+    } else {
+      const searchList = products.filter((item) =>
+        item.name.toLowerCase().includes(keyWord.toLowerCase())
+      );
+      console.log("searchList: ", searchList);
+      setProductsShow(searchList);
+    }
+  }, [keyWord, products]);
 
   useEffect(() => {
     (async () => {
@@ -273,7 +287,7 @@ const Home = () => {
           </div>
           <div className="texty-title">
             <p>
-              Sản Phẩm <strong style={{ color: "#3b1d82" }}>Giảm Sốc</strong>
+              Sản Phẩm <strong style={{ color: "#3b1d82" }}>ĐẶC BIỆT</strong>
             </p>
           </div>
 
@@ -299,44 +313,11 @@ const Home = () => {
               }}
               dataSource={productsShow}
               renderItem={(item) => (
-                <List.Item>
-                  <Badge.Ribbon text="Giảm giá" color="red">
-                    <Card
-                      className="card_product"
-                      onClick={() => handleReadMore(item._id)}
-                    >
-                      <img
-                        style={{ width: "100%", height: 180 }}
-                        src={item.image}
-                        alt=""
-                      ></img>
-                      <div className="title_product">{item.name}</div>
-                      <div className="price_group">
-                        <div className="price_product">
-                          {item.price.toLocaleString("vi", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
-                        </div>
-                        <div className="promotion_product">
-                          {item.promotion.toLocaleString("vi", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
-                        </div>
-                      </div>
-                      <div className="support_product">
-                        Thu cũ máy cũ - Giá thu cao nhất - Tặng thêm 1 triệu khi
-                        đổi máy cũ
-                      </div>
-                      <Rate
-                        className="rate_product"
-                        allowHalf
-                        defaultValue={5}
-                      />
-                    </Card>
-                  </Badge.Ribbon>
-                </List.Item>
+                <ProductItem
+                  key={item._id}
+                  item={item}
+                  handleReadMore={handleReadMore}
+                />
               )}
             />
           </Row>
@@ -348,7 +329,7 @@ const Home = () => {
             pageSize={pageSize}
             current={currentPage}
             defaultCurrent={1}
-            total={products.length} // Tổng số sản phẩm
+            total={productsShow.length}
             onChange={(page) => {
               setCurrentPage(page);
               renderItemList(page, products);
@@ -362,7 +343,7 @@ const Home = () => {
           </div>
           <div className="texty-title">
             <p>
-              Sản Phẩm <strong style={{ color: "#3b1d82" }}>ĐẶC BIỆT</strong>
+              Sản Phẩm <strong style={{ color: "#3b1d82" }}>Giảm Sốc</strong>
             </p>
           </div>
 
@@ -386,7 +367,7 @@ const Home = () => {
                 xl: 4,
                 xxl: 5,
               }}
-              dataSource={productsPC}
+              dataSource={products.filter((item) => item.promotion !== 0)}
               renderItem={(item) => (
                 <List.Item>
                   <Badge.Ribbon text="Giảm giá" color="red">
@@ -458,63 +439,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="image-one">
-          <Row justify="center" className="container-home container" key="1">
-            <List
-              grid={{
-                gutter: 16,
-                xs: 1,
-                sm: 2,
-                md: 4,
-                lg: 4,
-                xl: 4,
-                xxl: 5,
-              }}
-              dataSource={productsTablet}
-              renderItem={(item) => (
-                <List.Item>
-                  <Badge.Ribbon text="Giảm giá" color="red">
-                    <Card
-                      className="card_product"
-                      onClick={() => handleReadMore(item._id)}
-                    >
-                      <img
-                        style={{ width: "100%", height: 180 }}
-                        src={item.image}
-                        alt=""
-                      ></img>
-                      <div className="title_product">{item.name}</div>
-                      <div className="price_group">
-                        <div className="price_product">
-                          {item.price.toLocaleString("vi", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
-                        </div>
-                        <div className="promotion_product">
-                          {item.promotion.toLocaleString("vi", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
-                        </div>
-                      </div>
-                      <div className="support_product">
-                        Thu cũ lên đời - Giá thu cao nhất - Tặng thêm 1 triệu
-                        khi lên đời
-                      </div>
-                      <Rate
-                        className="rate_product"
-                        allowHalf
-                        defaultValue={5}
-                      />
-                    </Card>
-                  </Badge.Ribbon>
-                </List.Item>
-              )}
-            />
-          </Row>
         </div>
 
         <div class="container">

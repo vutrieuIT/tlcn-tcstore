@@ -11,11 +11,11 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import pn from "../../../assets/header/header-panner.png";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineCloseCircle } from "react-icons/ai";
 
 const { Header } = Layout;
 
-function Topbar() {
+function Topbar({ keyWord, setKeyWord }) {
   const [countNotification, setCountNotification] = useState(0);
   const [notification, setNotification] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -25,6 +25,7 @@ function Topbar() {
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [userData, setUserData] = useState([]);
   const [cart, setCart] = useState();
+  const [tempKeyWord, setTempKeyWord] = useState("");
 
   const history = useHistory();
 
@@ -104,6 +105,19 @@ function Topbar() {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
+  const onKeyWordChange = (e) => {
+    const newKeyword = e.target.value;
+    setTempKeyWord(newKeyword);
+  };
+
+  const onKeyWordClick = () => {
+    setKeyWord(tempKeyWord);
+  };
+  
+  useEffect(() => {
+    setTempKeyWord(keyWord);
+  }, [keyWord]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -140,8 +154,8 @@ function Topbar() {
                   <button
                     className="btn-sty"
                     onClick={() => {
-                        handleLink("/home");
-                        gotoTop();
+                      handleLink("/home");
+                      gotoTop();
                     }}
                   >
                     Danh mục
@@ -152,8 +166,13 @@ function Topbar() {
                     className="input-st"
                     type="text"
                     placeholder="Search..."
+                    value={tempKeyWord}
+                    onChange={onKeyWordChange}
                   />
-                  <AiOutlineSearch className="coll-header--search-icon " />
+                  <AiOutlineSearch
+                    onClick={onKeyWordClick}
+                    className="coll-header--search-icon "
+                  />
                 </div>
               </Row>
             </div>
