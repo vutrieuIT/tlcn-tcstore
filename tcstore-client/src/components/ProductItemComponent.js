@@ -22,13 +22,13 @@ const ProductItem = ({ item, handleReadMore }) => {
               <div className="title_product">{item.name}</div>
               <div className="price_group">
                 <div className="price_product">
-                  {item.price.toLocaleString("vi", {
+                  {item.promotion.toLocaleString("vi", {
                     style: "currency",
                     currency: "VND",
                   })}
                 </div>
                 <div className="promotion_product">
-                  {item.promotion.toLocaleString("vi", {
+                  {item.price.toLocaleString("vi", {
                     style: "currency",
                     currency: "VND",
                   })}
