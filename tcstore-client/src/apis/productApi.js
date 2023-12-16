@@ -33,6 +33,14 @@ const productApi = {
         }
         const url = '/category/products/' + id;
         return axiosClient.post(url, data);
+    },
+    getReview(productId){
+        const url = `/product/` + productId + "/reviews";
+        return axiosClient.get(url);
+    }, 
+    createReview(data, productId){
+        const url = `/product/` + productId + "/reviews";
+        return axiosClient.post(url, data);
     }
 
 }

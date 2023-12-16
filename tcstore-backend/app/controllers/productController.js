@@ -131,7 +131,7 @@ const productController = {
 
       // Kiểm tra xem người dùng đã đánh giá sản phẩm này chưa
       const existingReview = await ReviewModel.findOne({
-        user: user._id,
+        user: decodedToken.user._id,
         product: productId,
       });
       if (existingReview) {
@@ -140,7 +140,7 @@ const productController = {
 
       // Tạo mới đánh giá sản phẩm
       const review = new ReviewModel({
-        user: user._id,
+        user: decodedToken.user._id,
         product: productId,
         comment,
         rating,
@@ -148,6 +148,21 @@ const productController = {
       await review.save();
 
       res.status(201).send("Review created");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+    }
+  },
+
+  selectReviews: async (req, res) => {
+    try {
+      const productId = req.params.id;
+
+      const reviews = await ReviewModel.find({
+        product: productId,
+      }).populate("user", ["username", "image"]);
+
+      res.status(200).send(reviews);
     } catch (error) {
       console.error(error);
       res.status(500).send("Server error");

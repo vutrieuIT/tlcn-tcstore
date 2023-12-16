@@ -262,13 +262,30 @@ const ProductDetail = () => {
     },
   ]);
 
-  const handleReviewFromSubmit = (review) => {
-    const productId = window.location.pathname.split("/").pop();
-    console.log("product ID", productId);
-    console.log("review", review);
-    setReview([...reviews, review]);
-    console.log("reviews", reviews);
+  const handleReviewFromSubmit = async (review) => {
+    try {
+      console.log("product ID", id);
+      console.log("review", review);
+      await productApi.createReview(review, id);
+      // Sau khi tạo review thành công, cập nhật lại danh sách đánh giá
+      const updatedReview = await productApi.getReview(id);
+      setReview(updatedReview);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await productApi.getReview(id).then((item) => {
+          setReview(item);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {

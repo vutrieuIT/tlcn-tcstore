@@ -13,6 +13,8 @@ router.post('/', verifyToken.checkLogin, upload.single('image'), productControll
 router.put('/:id', verifyToken.checkLogin, productController.updateProduct)
 router.delete("/:id", verifyToken.checkLogin, productController.deleteProduct);
 router.get('/:id', middleware.getProduct, productController.getProductById);
+router.get('/:id/reviews', verifyToken.checkLogin, productController.selectReviews)
 router.post('/:id/reviews', verifyToken.checkLogin, productController.createReviews);
+
 
 module.exports = router;

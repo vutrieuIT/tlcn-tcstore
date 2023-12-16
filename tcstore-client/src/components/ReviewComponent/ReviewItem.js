@@ -18,13 +18,9 @@ const ReviewItem = ({ item }) => {
   return (
     <div className="review-item">
       <div className="review-header">
-        <img
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          alt="Avatar"
-          className="avatar"
-        />
+        <img src={item.user?.image} alt="Avatar" className="avatar" />
         <div className="review-info">
-          <span className="review-name">{item.name}</span>
+          <span className="review-name">{item.user?.username}</span>
           <span className="review-id" hidden={true}>
             ID: {item.id}
           </span>
