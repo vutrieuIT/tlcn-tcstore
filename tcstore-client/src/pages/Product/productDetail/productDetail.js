@@ -36,6 +36,7 @@ import {
 import Slider from "react-slick";
 import ReviewForm from "../../../components/ReviewComponent/ReviewFrom";
 import ReviewItem from "../../../components/ReviewComponent/ReviewItem";
+import ReviewSummary from "../../../components/ReviewComponent/ReviewSumary";
 
 const { Meta } = Card;
 const { Option } = Select;
@@ -452,99 +453,7 @@ const ProductDetail = () => {
                       <div class="review">
                         <div class="policy-review">
                           <div class="policy__list">
-                            <Row gutter={12}>
-                              <Col span={8}>
-                                <div className="comment_total">
-                                  <p class="title">4.9/5</p>
-                                  <Rate disabled defaultValue={5} />
-                                  <p>
-                                    <strong>15</strong> đánh giá và nhận xét
-                                  </p>
-                                </div>
-                              </Col>
-                              <Col span={16}>
-                                <div className="progress_comment">
-                                  <div class="is-active">
-                                    <div>5</div>
-                                    <div>
-                                      <svg
-                                        height="15"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512"
-                                      >
-                                        <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <Progress class="progress" percent={70} />
-                                  {/* <div class="total_comment">16 đánh giá</div> */}
-                                </div>
-                                <div className="progress_comment">
-                                  <div class="is-active">
-                                    <div>4</div>
-                                    <div>
-                                      <svg
-                                        height="15"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512"
-                                      >
-                                        <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <Progress class="progress" percent={70} />
-                                  {/* <div class="total_comment">16 đánh giá</div> */}
-                                </div>
-                                <div className="progress_comment">
-                                  <div class="is-active">
-                                    <div>3</div>
-                                    <div>
-                                      <svg
-                                        height="15"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512"
-                                      >
-                                        <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <Progress class="progress" percent={70} />
-                                  {/* <div class="total_comment">16 đánh giá</div> */}
-                                </div>
-                                <div className="progress_comment">
-                                  <div class="is-active">
-                                    <div>2</div>
-                                    <div>
-                                      <svg
-                                        height="15"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512"
-                                      >
-                                        <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <Progress class="progress" percent={70} />
-                                  {/* <div class="total_comment">16 đánh giá</div> */}
-                                </div>
-                                <div className="progress_comment">
-                                  <div class="is-active">
-                                    <div>1</div>
-                                    <div>
-                                      <svg
-                                        height="15"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512"
-                                      >
-                                        <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <Progress class="progress" percent={70} />
-                                  {/* <div class="total_comment">16 đánh giá</div> */}
-                                </div>
-                              </Col>
-                            </Row>
+                            <ReviewSummary reviews={reviews} />
                           </div>
                         </div>
                       </div>
