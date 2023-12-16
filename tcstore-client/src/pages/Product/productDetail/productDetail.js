@@ -418,9 +418,8 @@ const ProductDetail = () => {
                                 <i class="icondetail-sachhd"></i>
                               </div>
                               <p>
-                                Bộ sản phẩm gồm: Dây giày, Hộp đựng giày, 1 đôi
-                                tất tặng, giày... {productDetail.name}{" "}
-                                <a href="#">Xem hình</a>
+                                Bộ sản phẩm gồm: Dây sạc, túi chống sốc...{" "}
+                                {productDetail.name} <a href="#">Xem hình</a>
                               </p>
                             </li>
                           </ul>
