@@ -34,8 +34,9 @@ const authController = {
     console.log(req.body);
     try {
       const user = await UserModel.findOne({ email: req.body.email });
+      console.log("resgister user", user);
       if (!user) {
-        res
+        return res
           .status(400)
           .json({ message: "Unregistered account!", status: false });
       }
@@ -46,18 +47,18 @@ const authController = {
       );
 
       if (!validatePassword) {
-        res.status(400).json({ message: "wrong password!", status: false });
+        return res.status(400).json({ message: "wrong password!", status: false });
       }
       if (user && validatePassword) {
         const token = jwt.sign({ user: user }, _const.JWT_ACCESS_KEY, {
           expiresIn: 10000000,
         });
         res.header("Authorization", token);
-        res.status(200).json({ user, token, status: true });
+        return res.status(200).json({ user, token, status: true });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).json("Internal Server error");
+      return res.status(500).json("Internal Server error");
     }
   },
 };

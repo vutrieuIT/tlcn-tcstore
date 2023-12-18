@@ -49,6 +49,7 @@ const RegisterCustomer = () => {
       await axiosClient
         .post("http://localhost:3100/api/auth/register", formatData)
         .then((response) => {
+          console.log(response);
           if (response === undefined) {
             notification["error"]({
               message: "Thông báo",
