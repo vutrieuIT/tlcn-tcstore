@@ -87,6 +87,7 @@ const Home = ({ keyWord }) => {
           limit: 100,
         });
         setProducts(response.data.docs);
+        renderItemList(1, response.data.docs);
         setFilterCategory(null);
       } else {
         const response = await productApi.getProductsByCategory(
@@ -94,6 +95,7 @@ const Home = ({ keyWord }) => {
           id
         );
         setProducts(response.data.docs);
+        renderItemList(1, response.data.docs);
         setFilterCategory(categoryName);
       }
     } catch (error) {
@@ -109,12 +111,17 @@ const Home = ({ keyWord }) => {
     setProductsShow(dataPaginate);
   };
 
+  useEffect(() => {
+    setProductList(products);
+  }, [products]);
+
+  useEffect(() => {
+    renderItemList(1, productList);
+  }, [productList]);
+
   useEffect(async () => {
     console.log("keyword = ", keyWord);
-    if (keyWord == null || keyWord === "") {
-      await setProductList(products);
-      renderItemList(1, productList);
-    } else {
+    if (keyWord != null || keyWord !== "") {
       const searchList = await products.filter((item) =>
         item.name.toLowerCase().includes(keyWord.toLowerCase())
       );
@@ -122,7 +129,7 @@ const Home = ({ keyWord }) => {
       await setProductList(searchList);
       renderItemList(1, productList);
     }
-  }, [keyWord, products]);
+  }, [keyWord]);
 
   useEffect(() => {
     (async () => {
