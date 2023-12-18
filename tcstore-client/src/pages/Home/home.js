@@ -109,16 +109,18 @@ const Home = ({ keyWord }) => {
     setProductsShow(dataPaginate);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log("keyword = ", keyWord);
     if (keyWord == null || keyWord === "") {
-      renderItemList(1, products);
+      await setProductList(products);
+      renderItemList(1, productList);
     } else {
-      const searchList = products.filter((item) =>
+      const searchList = await products.filter((item) =>
         item.name.toLowerCase().includes(keyWord.toLowerCase())
       );
       console.log("searchList: ", searchList);
-      setProductsShow(searchList);
+      await setProductList(searchList);
+      renderItemList(1, productList);
     }
   }, [keyWord, products]);
 
@@ -329,7 +331,7 @@ const Home = ({ keyWord }) => {
             pageSize={pageSize}
             current={currentPage}
             defaultCurrent={1}
-            total={productsShow.length}
+            total={productList.length}
             onChange={(page) => {
               setCurrentPage(page);
               renderItemList(page, products);
