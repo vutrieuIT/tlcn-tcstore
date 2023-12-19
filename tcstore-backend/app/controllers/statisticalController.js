@@ -2,6 +2,7 @@ const StatisticalModel = require('../models/statistical');
 const UserModel = require('../models/user');
 const ProductModel = require('../models/product');
 const CategoryModel = require('../models/category');
+const OrderModel = require("../models/order")
 
 const statisticalController = {
     getAllStatistical: async (req, res) => {
@@ -12,14 +13,16 @@ const statisticalController = {
             const userCountPromise = UserModel.countDocuments();
             const productCountPromise = ProductModel.countDocuments();
             const categoryCountPromise = CategoryModel.countDocuments();
+            const orderCountPromise = OrderModel.countDocuments();
             const result = {};
             // Sử dụng Promise.all để chờ cả hai Promise hoàn thành
-            Promise.all([userCountPromise, productCountPromise, categoryCountPromise])
+            Promise.all([userCountPromise, productCountPromise, categoryCountPromise, orderCountPromise])
                 .then((results) => {
-                    const [userCount, productCount, categoryCount] = results;
+                    const [userCount, productCount, categoryCount, orderCount] = results;
                     result.userTotal = userCount;
                     result.productTotal = productCount;
                     result.categoryTotal = categoryCount;
+                    result.orderTotal = orderCount;
 
                     res.status(200).json({ data: result });
                 })
