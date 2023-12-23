@@ -8,7 +8,8 @@ const ReviewSummary = ({ reviews }) => {
       (acc, review) => acc + review.rating,
       0
     );
-    return Number((totalRatings / reviews.length).toFixed(1)); // Làm tròn điểm trung bình đến 1 chữ số thập phân
+    const res = Number((totalRatings / reviews.length).toFixed(1));
+    return res ? res : 0; // Làm tròn điểm trung bình đến 1 chữ số thập phân
   };
 
   const countRatings = (rating) => {

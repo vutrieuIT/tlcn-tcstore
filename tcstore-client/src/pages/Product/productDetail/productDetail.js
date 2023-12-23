@@ -254,14 +254,7 @@ const ProductDetail = () => {
     }
   };
 
-  const [reviews, setReview] = useState([
-    {
-      id: "id1",
-      rating: 1,
-      comment: "review1",
-      name: "trieuvd",
-    },
-  ]);
+  const [reviews, setReview] = useState([]);
 
   const handleReviewFromSubmit = async (review) => {
     try {
@@ -281,6 +274,7 @@ const ProductDetail = () => {
       try {
         await productApi.getReview(id).then((item) => {
           setReview(item);
+          console.log(item);
         });
       } catch (error) {
         console.error(error);
@@ -331,18 +325,30 @@ const ProductDetail = () => {
               </Col>
               <Col span={8}>
                 <Card className="card_total" bordered={false}>
-                  <div className="price_product">
-                    {productDetail?.price?.toLocaleString("vi", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </div>
-                  <div className="promotion_product">
-                    {productDetail?.promotion?.toLocaleString("vi", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </div>
+                  {productDetail?.promotion !== 0 ? (
+                    <div>
+                      <div className="price_product">
+                        {productDetail?.promotion?.toLocaleString("vi", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </div>
+                      <div className="promotion_product">
+                        {productDetail?.price?.toLocaleString("vi", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="price_product">
+                      {productDetail?.price?.toLocaleString("vi", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </div>
+                  )}
+
                   <div class="box-product-promotion">
                     <div class="box-product-promotion-header">
                       <p>Khuyến mãi</p>
