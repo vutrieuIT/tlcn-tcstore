@@ -189,7 +189,7 @@ const Home = ({ keyWord }) => {
                     className="menu-category"
                     onClick={() => handleClickCategory(null, null)}
                   >
-                    tất cả
+                    Tất cả
                     <RightOutlined />
                   </div>
                 </li>
