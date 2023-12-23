@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Dropdown, Row } from 'antd';
-import { Menu } from 'antd';
-import { UserOutlined, SettingOutlined, LogoutOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from "react";
+import { Avatar, Dropdown, Row } from "antd";
+import { Menu } from "antd";
+import {
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import './dropdownMenu.css';
+import "./dropdownMenu.css";
 import userApi from "../../apis/userApi";
 
 function DropdownAvatar() {
-
   const [userData, setUserData] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -18,15 +22,19 @@ function DropdownAvatar() {
     history.push("/");
     await userApi.logout();
     window.location.reload(false);
-  }
+  };
 
   const Login = () => {
     history.push("/login");
-  }
+  };
+
+  const register = () => {
+    history.push("/register");
+  };
 
   const handleRouter = (link) => {
     history.push(link);
-  }
+  };
 
   useEffect(() => {
     (async () => {
@@ -38,25 +46,33 @@ function DropdownAvatar() {
           setIsLogin(checkLogin);
         }
       } catch (error) {
-        console.log('Failed to fetch profile user:' + error);
+        console.log("Failed to fetch profile user:" + error);
       }
     })();
-  }, [])
+  }, []);
 
   const avatarPrivate = (
-    <Menu >
-      <Menu.Item icon={<UserOutlined />}  >
-        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/profile")}>
+    <Menu>
+      <Menu.Item icon={<UserOutlined />}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => handleRouter("/profile")}
+        >
           Trang cá nhân
         </a>
       </Menu.Item>
-      <Menu.Item icon={<ShoppingCartOutlined />}  >
-        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/cart-history")}>
+      <Menu.Item icon={<ShoppingCartOutlined />}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => handleRouter("/cart-history")}
+        >
           Quản lý đơn hàng
         </a>
       </Menu.Item>
-      <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}  >
-        <a target="_blank" rel="noopener noreferrer" >
+      <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}>
+        <a target="_blank" rel="noopener noreferrer">
           Thoát
         </a>
       </Menu.Item>
@@ -65,34 +81,43 @@ function DropdownAvatar() {
 
   const avatarPublic = (
     <Menu>
-      <Menu.Item icon={<UserOutlined />} >
+      <Menu.Item icon={<UserOutlined />}>
         <a target="_blank" rel="noopener noreferrer" onClick={Login}>
           Đăng nhập
         </a>
       </Menu.Item>
+      <Menu.Item icon={<UserOutlined />}>
+        <a target="_blank" rel="noopener noreferrer" onClick={register}>
+          Đăng ký
+        </a>
+      </Menu.Item>
     </Menu>
-  )
-
+  );
 
   return (
-
-    <Dropdown key="avatar" placement="bottomCenter" overlay={isLogin ? avatarPrivate : avatarPublic} arrow>
-      <Row className="container row-st"
-      >
-
+    <Dropdown
+      key="avatar"
+      placement="bottomCenter"
+      overlay={isLogin ? avatarPrivate : avatarPublic}
+      arrow
+    >
+      <Row className="container row-st">
         <div className="sty1">
           <div style={{ paddingRight: 10 }}>
-            <Avatar style={{ outline: 'none', fontSize: '2px' }}
-              src={userData ? userData.image : "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"}
+            <Avatar
+              style={{ outline: "none", fontSize: "2px" }}
+              src={
+                userData
+                  ? userData.image
+                  : "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+              }
             />
           </div>
-          <p className="sty2"  >
-            {userData?.username}
-          </p>
+          <p className="sty2">{userData?.username}</p>
         </div>
       </Row>
     </Dropdown>
   );
-};
+}
 
 export default DropdownAvatar;
