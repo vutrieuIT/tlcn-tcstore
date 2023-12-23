@@ -79,14 +79,14 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your Username!',
+                    message: 'Please input your email!',
                   },
                 ]}
               >
                 <Input
                   style={{ height: 34, borderRadius: 5 }}
                   prefix={<UserOutlined className="siteformitemicon" />}
-                  placeholder="Username" />
+                  placeholder="Email" />
               </Form.Item >
               <Form.Item
                 style={{ marginBottom: 8 }}
