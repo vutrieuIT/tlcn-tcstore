@@ -136,7 +136,7 @@ const Home = ({ keyWord }) => {
       try {
         const response = await productApi.getListProducts({
           page: 1,
-          limit: 10,
+          limit: 100,
         });
         setProductList(response.data.docs);
         setTotalEvent(response);
@@ -153,14 +153,14 @@ const Home = ({ keyWord }) => {
         console.log("Failed to fetch event list:" + error);
       }
       try {
-        const response = await productApi.getCategory({ limit: 10, page: 1 });
+        const response = await productApi.getCategory({ limit: 20, page: 1 });
         console.log(response);
         setCategories(response.data.docs);
       } catch (error) {
         console.log(error);
       }
       try {
-        const data = { limit: 10, page: 1 };
+        const data = { limit: 100, page: 1 };
         const response = await productApi.getListProducts(data);
         console.log(response);
         setProducts(response.data.docs);
