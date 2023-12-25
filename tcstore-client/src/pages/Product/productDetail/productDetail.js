@@ -320,7 +320,12 @@ const ProductDetail = () => {
             <Row gutter={12} style={{ marginTop: 20 }}>
               <Col span={8}>
                 <Card className="card_image" bordered={false}>
-                  <img src={productDetail.image} />
+                  <img
+                    src={productDetail.image?.replace(
+                      "http://localhost:3100",
+                      "http://vuductrieu.id.vn:3100"
+                    )}
+                  />
                 </Card>
               </Col>
               <Col span={8}>

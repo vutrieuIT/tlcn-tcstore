@@ -16,7 +16,10 @@ const ProductItem = ({ item, handleReadMore }) => {
             >
               <img
                 style={{ width: "100%", height: 180 }}
-                src={item.image}
+                src={item.image?.replace(
+                  "http://localhost:3100",
+                  "http://vuductrieu.id.vn:3100"
+                )}
                 alt=""
               ></img>
               <div className="title_product">{item.name}</div>
@@ -52,7 +55,10 @@ const ProductItem = ({ item, handleReadMore }) => {
           >
             <img
               style={{ width: "100%", height: 180 }}
-              src={item.image}
+              src={item.image?.replace(
+                "http://localhost:3100",
+                "http://vuductrieu.id.vn:3100"
+              )}
               alt=""
             ></img>
             <div className="title_product">{item.name}</div>

@@ -18,7 +18,14 @@ const ReviewItem = ({ item }) => {
   return (
     <div className="review-item">
       <div className="review-header">
-        <img src={item.user?.image} alt="Avatar" className="avatar" />
+        <img
+          src={item.user?.image?.replace(
+            "http://localhost:3100",
+            "http://vuductrieu.id.vn:3100"
+          )}
+          alt="Avatar"
+          className="avatar"
+        />
         <div className="review-info">
           <span className="review-name">{item.user?.username}</span>
           <span className="review-id" hidden={true}>

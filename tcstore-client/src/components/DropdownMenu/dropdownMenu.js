@@ -108,7 +108,10 @@ function DropdownAvatar() {
               style={{ outline: "none", fontSize: "2px" }}
               src={
                 userData
-                  ? userData.image
+                  ? userData.image?.replace(
+                      "http://localhost:3100",
+                      "http://vuductrieu.id.vn:3100"
+                    )
                   : "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
               }
             />

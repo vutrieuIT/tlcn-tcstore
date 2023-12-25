@@ -57,20 +57,38 @@ function DropdownAvatar() {
     <Dropdown key="avatar" placement="bottomCenter" overlay={avatar} arrow>
       <Row
         style={{
-          paddingLeft: 5, paddingRight: 5, cursor: 'pointer'
+          paddingLeft: 5,
+          paddingRight: 5,
+          cursor: "pointer",
         }}
         className="container"
       >
-        <div style={{ display: 'flex', alignItems: "center", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <div style={{ paddingRight: 10 }}>
             <Avatar
               style={{
-                outline: 'none',
+                outline: "none",
               }}
-              src={userData.image}
+              src={userData.image?.replace(
+                "http://localhost:3100",
+                "http://vuductrieu.id.vn:3100"
+              )}
             />
           </div>
-          <p style={{ padding: 0, margin: 0, textTransform: 'capitalize', color: "#000000" }} >
+          <p
+            style={{
+              padding: 0,
+              margin: 0,
+              textTransform: "capitalize",
+              color: "#000000",
+            }}
+          >
             {userData.username}
           </p>
         </div>

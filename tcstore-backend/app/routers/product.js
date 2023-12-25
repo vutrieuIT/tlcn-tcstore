@@ -1,20 +1,28 @@
 const productController = require("../controllers/productController");
 const router = require("express").Router();
-const verifyToken = require('../utils/middleware');
-const middleware = require('../utils/middleware');
+const verifyToken = require("../utils/middleware");
+const middleware = require("../utils/middleware");
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
-router.post('/search', productController.getAllProduct);
+router.post("/search", productController.getAllProduct);
 router.get("/searchByName", productController.searchProductByName);
 
-router.post('/', verifyToken.checkLogin, upload.single('image'), productController.createProduct)
-router.put('/:id', verifyToken.checkLogin, productController.updateProduct)
+router.post(
+  "/",
+  verifyToken.checkLogin,
+  upload.single("image"),
+  productController.createProduct
+);
+router.put("/:id", verifyToken.checkLogin, productController.updateProduct);
 router.delete("/:id", verifyToken.checkLogin, productController.deleteProduct);
-router.get('/:id', middleware.getProduct, productController.getProductById);
-router.get('/:id/reviews', verifyToken.checkLogin, productController.selectReviews)
-router.post('/:id/reviews', verifyToken.checkLogin, productController.createReviews);
-
+router.get("/:id", middleware.getProduct, productController.getProductById);
+router.get("/:id/reviews", productController.selectReviews);
+router.post(
+  "/:id/reviews",
+  verifyToken.checkLogin,
+  productController.createReviews
+);
 
 module.exports = router;
