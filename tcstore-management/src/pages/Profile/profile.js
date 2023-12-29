@@ -106,7 +106,7 @@ const Profile = () => {
                 >
                   <Row justify="center">
                     <img
-                      src={userData.image.replace(
+                      src={userData.image?.replace(
                         "http://localhost:3100",
                         process.env.REACT_APP_HOST_URL
                       )}
