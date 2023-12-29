@@ -1,0 +1,3 @@
+ls
+cd dump
+ls
