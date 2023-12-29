@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Badge, Rate } from "antd";
 
 const ProductItem = ({ item, handleReadMore }) => {
+  const HOST_URL = process.env.REACT_APP_HOST_URL;
   const renderProduct = () => {
     if (item.promotion !== 0) {
       return (
@@ -16,10 +17,7 @@ const ProductItem = ({ item, handleReadMore }) => {
             >
               <img
                 style={{ width: "100%", height: 180 }}
-                src={item.image?.replace(
-                  "http://localhost:3100",
-                  "http://vuductrieu.id.vn:3100"
-                )}
+                src={item.image?.replace("http://localhost:3100", HOST_URL)}
                 alt=""
               ></img>
               <div className="title_product">{item.name}</div>
@@ -55,10 +53,7 @@ const ProductItem = ({ item, handleReadMore }) => {
           >
             <img
               style={{ width: "100%", height: 180 }}
-              src={item.image?.replace(
-                "http://localhost:3100",
-                "http://vuductrieu.id.vn:3100"
-              )}
+              src={item.image?.replace("http://localhost:3100", HOST_URL)}
               alt=""
             ></img>
             <div className="title_product">{item.name}</div>

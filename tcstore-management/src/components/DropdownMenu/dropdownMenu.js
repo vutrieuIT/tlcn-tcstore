@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "./dropdownMenu.css";
 import { useHistory } from "react-router-dom";
-import { Avatar, Dropdown, Row, Menu } from 'antd';
-import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Avatar, Dropdown, Row, Menu } from "antd";
+import {
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import userApi from "../../apis/userApi";
 
 function DropdownAvatar() {
-
   const [userData, setUserData] = useState([]);
   let history = useHistory();
 
@@ -14,7 +17,7 @@ function DropdownAvatar() {
     localStorage.clear();
     history.push("/");
     await userApi.logout();
-  }
+  };
 
   useEffect(() => {
     (async () => {
@@ -23,35 +26,38 @@ function DropdownAvatar() {
         console.log(response);
         setUserData(response.user);
       } catch (error) {
-        console.log('Failed to fetch profile user:' + error);
+        console.log("Failed to fetch profile user:" + error);
       }
     })();
-  }, [])
+  }, []);
 
   const handleRouter = (link) => {
     history.push(link);
-  }
+  };
 
   const avatar = (
     <Menu>
-      <Menu.Item icon={<UserOutlined />} >
-        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/profile")}>
+      <Menu.Item icon={<UserOutlined />}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => handleRouter("/profile")}
+        >
           Trang cá nhân
         </a>
       </Menu.Item>
-      <Menu.Item icon={<SettingOutlined />} >
-        <a target="_blank" rel="noopener noreferrer" >
+      <Menu.Item icon={<SettingOutlined />}>
+        <a target="_blank" rel="noopener noreferrer">
           Cài đặt
         </a>
       </Menu.Item>
-      <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}  >
-        <a target="_blank" rel="noopener noreferrer" >
+      <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}>
+        <a target="_blank" rel="noopener noreferrer">
           Thoát
         </a>
       </Menu.Item>
     </Menu>
   );
-
 
   return (
     <Dropdown key="avatar" placement="bottomCenter" overlay={avatar} arrow>
@@ -77,7 +83,7 @@ function DropdownAvatar() {
               }}
               src={userData.image?.replace(
                 "http://localhost:3100",
-                "http://vuductrieu.id.vn:3100"
+                process.env.REACT_APP_HOST_URL
               )}
             />
           </div>
@@ -95,6 +101,6 @@ function DropdownAvatar() {
       </Row>
     </Dropdown>
   );
-};
+}
 
 export default DropdownAvatar;

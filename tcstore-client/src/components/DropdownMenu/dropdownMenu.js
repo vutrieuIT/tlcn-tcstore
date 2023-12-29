@@ -12,6 +12,7 @@ import "./dropdownMenu.css";
 import userApi from "../../apis/userApi";
 
 function DropdownAvatar() {
+    const HOST_URL = process.env.REACT_APP_HOST_URL;
   const [userData, setUserData] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -110,7 +111,7 @@ function DropdownAvatar() {
                 userData
                   ? userData.image?.replace(
                       "http://localhost:3100",
-                      "http://vuductrieu.id.vn:3100"
+                      HOST_URL
                     )
                   : "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
               }

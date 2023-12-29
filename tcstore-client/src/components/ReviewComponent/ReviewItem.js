@@ -2,6 +2,7 @@ import React from "react";
 import "./ReviewItem.css"; // Import file CSS cho styling
 
 const ReviewItem = ({ item }) => {
+    const HOST_URL = process.env.REACT_APP_HOST_URL;
   const getStarIcons = (starCount) => {
     // Tạo biểu tượng sao dựa trên starCount
     const stars = [];
@@ -21,7 +22,7 @@ const ReviewItem = ({ item }) => {
         <img
           src={item.user?.image?.replace(
             "http://localhost:3100",
-            "http://vuductrieu.id.vn:3100"
+            HOST_URL
           )}
           alt="Avatar"
           className="avatar"

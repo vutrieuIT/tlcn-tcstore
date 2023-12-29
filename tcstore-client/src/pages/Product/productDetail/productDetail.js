@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { Col, Row, Tag, Spin, Card } from "antd";
 import { DateTime } from "../../../utils/dateTime";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+
 import {
   Typography,
   Button,
@@ -323,7 +324,7 @@ const ProductDetail = () => {
                   <img
                     src={productDetail.image?.replace(
                       "http://localhost:3100",
-                      "http://vuductrieu.id.vn:3100"
+                      process.env.REACT_APP_HOST_URL
                     )}
                   />
                 </Card>
