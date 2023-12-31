@@ -3,58 +3,24 @@ import "./profile.css";
 import {
   Col,
   Row,
-  Typography,
   Spin,
-  Button,
-  PageHeader,
   Card,
-  Badge,
   Divider,
-  Input,
-  Space,
-  Form,
-  Pagination,
-  Modal,
-  Popconfirm,
-  notification,
-  BackTop,
-  Tag,
   Breadcrumb,
-  Select,
 } from "antd";
 import {
-  AppstoreAddOutlined,
-  QrcodeOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  EyeOutlined,
   SafetyOutlined,
-  SearchOutlined,
-  CalendarOutlined,
   UserOutlined,
-  TeamOutlined,
   HomeOutlined,
   PhoneOutlined,
   FormOutlined,
-  HeatMapOutlined,
-  EditOutlined,
 } from "@ant-design/icons";
-import QRCode from "qrcode.react";
 import userApi from "../../apis/userApi";
-import { useHistory } from "react-router-dom";
-import { DateTime } from "../../utils/dateTime";
 import ReactWeather, { useOpenWeather } from "react-open-weather";
-
-const { confirm } = Modal;
-const { Option } = Select;
-const { Title } = Typography;
-const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState([]);
-
-  const history = useHistory();
 
   const { data, isLoading, errorMessage } = useOpenWeather({
     key: "03b81b9c18944e6495d890b189357388",
@@ -105,6 +71,7 @@ const Profile = () => {
                   style={{ padding: 0, margin: 0 }}
                 >
                   <Row justify="center">
+                    {/* eslint-disable-next-line */}
                     <img
                       src={userData.image?.replace(
                         "http://localhost:3100",
