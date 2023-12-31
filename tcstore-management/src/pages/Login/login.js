@@ -3,7 +3,7 @@ import "./login.css";
 import userApi from "../../apis/userApi";
 import { useHistory } from "react-router-dom";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Checkbox, Divider, Alert, notification } from 'antd';
+import { Form, Input, Button, Divider, Alert, notification } from 'antd';
 import backgroundLogin from "../../assets/image/background-login.png";
 
 const Login = () => {
