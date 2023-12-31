@@ -195,11 +195,6 @@ const OrderList = lazy(() => {
 
 
 const RouterURL = withRouter(({ location }) => {
-
-    const checkAuth = () => {
-        return localStorage.getItem('role');
-    }
-
     const LoginContainer = () => (
         <div>
             <PublicRoute exact path="/">
