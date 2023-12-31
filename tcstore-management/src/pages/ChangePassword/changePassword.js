@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "./changePassword.css";
-import userApi from "../../apis/userApi";
 import { useHistory } from "react-router-dom";
 import { Form, Input, Button, Divider, Alert,notification } from 'antd';
 import backgroundLogin from "../../assets/image/background-login.png";
@@ -8,8 +7,6 @@ import { useParams } from "react-router-dom";
 import axiosClient from '../../apis/axiosClient';
 
 const ChangePassWord = () => {
-
-    const [changePassWord, setChangePassword] = useState();
     const [isLogin, setLogin] = useState(false);
 
     let history = useHistory();
