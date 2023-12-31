@@ -69,9 +69,9 @@ const RouterURL = withRouter(({ location }) => {
     <div>
       <Layout style={{ minHeight: "100vh" }}>
         <Layout style={{ display: "flex" }}>
-          <Header />
+          <Header keyWord={keyWord} setKeyWord={setKeyWord} />
           <Route exact path="/">
-            <Home />
+            <Home keyWord={keyWord} />
           </Route>
           <Route exact path="/event">
             <Event />

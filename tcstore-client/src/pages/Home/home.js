@@ -108,28 +108,34 @@ const Home = ({ keyWord }) => {
     const endIndex = page * pageSize;
     const dataPaginate = data.slice(startIndex, endIndex);
 
-    setProductsShow(dataPaginate);
+    return dataPaginate;
   };
 
   useEffect(() => {
     setProductList(products);
+    console.log("updated products ", products);
   }, [products]);
 
   useEffect(() => {
-    renderItemList(1, productList);
+    // Gọi renderItemList để cập nhật productsShow dựa trên productList
+    const updateProductShow = renderItemList(1, productList);
+    setProductsShow(updateProductShow);
   }, [productList]);
 
-  useEffect(async () => {
-    console.log("keyword = ", keyWord);
-    if (keyWord != null || keyWord !== "") {
-      const searchList = await products.filter((item) =>
-        item.name.toLowerCase().includes(keyWord.toLowerCase())
-      );
-      console.log("searchList: ", searchList);
-      await setProductList(searchList);
-      renderItemList(1, productList);
-    }
-  }, [keyWord]);
+  useEffect(() => {
+    const filterProductsByKeyword = async () => {
+      if (keyWord != null && keyWord !== "") {
+        const searchList = await products.filter((item) =>
+          item.name.toLowerCase().includes(keyWord.toLowerCase())
+        );
+        setProductList(searchList); // Cập nhật danh sách sản phẩm theo từ khóa
+      } else {
+        setProductList(products); // Nếu không có từ khóa, sử dụng danh sách sản phẩm gốc
+      }
+    };
+
+    filterProductsByKeyword();
+  }, [keyWord, products]);
 
   useEffect(() => {
     (async () => {
@@ -146,13 +152,6 @@ const Home = ({ keyWord }) => {
       }
 
       try {
-        const response = await productApi.getListEvents(1, 6);
-        setEventListHome(response.data);
-        setTotalEvent(response.total_count);
-      } catch (error) {
-        console.log("Failed to fetch event list:" + error);
-      }
-      try {
         const response = await productApi.getCategory({ limit: 20, page: 1 });
         console.log(response);
         setCategories(response.data.docs);
@@ -162,12 +161,11 @@ const Home = ({ keyWord }) => {
       try {
         const data = { limit: 100, page: 1 };
         const response = await productApi.getListProducts(data);
-        console.log(response);
-        setProducts(response.data.docs);
+        console.log("reponse = ", response.data?.docs);
+        setProducts(response.data?.docs);
+        console.log("api call products ", products);
         renderItemList(1, response.data.docs);
-        const response2 = await productApi.getListProducts(data);
-        console.log(response2);
-        setProductsPC(response2.data.docs);
+        setProductsPC(response.data.docs);
       } catch (error) {
         console.log(error);
       }
@@ -341,7 +339,8 @@ const Home = ({ keyWord }) => {
             total={productList.length}
             onChange={(page) => {
               setCurrentPage(page);
-              renderItemList(page, products);
+              const updatedProducts = renderItemList(page, productList);
+              setProductsShow(updatedProducts);
             }}
           />
         </div>
