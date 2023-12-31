@@ -31,7 +31,7 @@ const EventCreate = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(response => {
-                if (localStorage.getItem("role") == "admin" || localStorage.getItem("role") == "approval") {
+                if (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "approval") {
                     const formatData = {
                         "event_name": values.event_name,
                         "type_event_uids": values.type_event,
@@ -146,17 +146,18 @@ const EventCreate = () => {
     }
 
     useEffect(() => {
-        (async () => {
-            try {
-                form.resetFields();
-                const response = await eventApi.getTypeEvent();
-                setTypeEvent(response.type_event);
-                setLoading(false);
-            } catch (error) {
-                throw error;
-            }
-        })();
-        window.scrollTo(0, 0);
+      (async () => {
+        try {
+          form.resetFields();
+          const response = await eventApi.getTypeEvent();
+          setTypeEvent(response.type_event);
+          setLoading(false);
+        } catch (error) {
+          throw error;
+        }
+      })();
+      window.scrollTo(0, 0);
+      // eslint-disable-next-line
     }, [])
 
     return (
@@ -230,7 +231,7 @@ const EventCreate = () => {
                             <InputNumber style={{ width: "100%" }} min={1} max={9999} placeholder="Number of participants" ></InputNumber>
                         </Form.Item>
 
-                        {localStorage.getItem("role") == "admin" || localStorage.getItem("role") == "approval" ?
+                        {localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "approval" ?
                             <Form.Item
                                 name="score"
                                 label="Score"
