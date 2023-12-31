@@ -1,158 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./productDetail.css";
-import axiosClient from "../../../apis/axiosClient";
 import { useParams } from "react-router-dom";
-import eventApi from "../../../apis/eventApi";
 import productApi from "../../../apis/productApi";
 import { useHistory } from "react-router-dom";
-import { Col, Row, Tag, Spin, Card } from "antd";
-import { DateTime } from "../../../utils/dateTime";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { Col, Row, Spin, Card } from "antd";
+import { Button, Breadcrumb, Rate } from "antd";
+import { AuditOutlined, HomeOutlined } from "@ant-design/icons";
 
-import {
-  Typography,
-  Button,
-  Badge,
-  Breadcrumb,
-  Popconfirm,
-  Progress,
-  notification,
-  Form,
-  Input,
-  Select,
-  Rate,
-} from "antd";
-import {
-  HistoryOutlined,
-  AuditOutlined,
-  AppstoreAddOutlined,
-  CloseOutlined,
-  UserOutlined,
-  MehOutlined,
-  TeamOutlined,
-  HomeOutlined,
-  CheckOutlined,
-} from "@ant-design/icons";
-
-import Slider from "react-slick";
 import ReviewForm from "../../../components/ReviewComponent/ReviewFrom";
 import ReviewItem from "../../../components/ReviewComponent/ReviewItem";
 import ReviewSummary from "../../../components/ReviewComponent/ReviewSumary";
 
-const { Meta } = Card;
-const { Option } = Select;
-
-const { Title } = Typography;
-const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
-const { TextArea } = Input;
-
 const ProductDetail = () => {
   const [productDetail, setProductDetail] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [cartLength, setCartLength] = useState();
-  const [visible, setVisible] = useState(false);
-  const [dataForm, setDataForm] = useState([]);
-  const [lengthForm, setLengthForm] = useState();
-  const [form] = Form.useForm();
-  const [template_feedback, setTemplateFeedback] = useState();
   let { id } = useParams();
   const history = useHistory();
-
-  const hideModal = () => {
-    setVisible(false);
-  };
-
-  const handleJointEvent = async (id) => {
-    try {
-      await eventApi.joinEvent(id).then((response) => {
-        if (response === undefined) {
-          notification["error"]({
-            message: `Notification`,
-            description: "Joint Event Failed",
-          });
-        } else {
-          notification["success"]({
-            message: `Thông báo`,
-            description: "Successfully Joint Event",
-          });
-          listEvent();
-        }
-      });
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
-    }
-  };
-
-  const handleCancelJointEvent = async (id) => {
-    try {
-      await eventApi.cancelJoinEvent(id).then((response) => {
-        if (response === undefined) {
-          notification["error"]({
-            message: `Notification`,
-            description: "Cancel Join Event Failed",
-          });
-        } else {
-          notification["success"]({
-            message: `Thông báo`,
-            description: "Successfully Cancel Joint Event",
-          });
-          listEvent();
-        }
-      });
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
-    }
-  };
-
-  const listEvent = () => {
-    setLoading(true);
-    (async () => {
-      try {
-        const response = await eventApi.getDetailEvent(id);
-        console.log(response);
-        setProductDetail(response);
-        setLoading(false);
-      } catch (error) {
-        console.log("Failed to fetch event detail:" + error);
-      }
-    })();
-    window.scrollTo(0, 0);
-  };
-
-  const handleDetailEvent = (id) => {
-    history.replace("/event-detail/" + id);
-    window.location.reload();
-    window.scrollTo(0, 0);
-  };
-
-  const getDataForm = async (uid) => {
-    try {
-      await axiosClient
-        .get("/event/" + id + "/template_feedback/" + uid + "/question")
-        .then((response) => {
-          console.log(response);
-          setDataForm(response);
-          let tabs = [];
-          for (let i = 0; i < response.length; i++) {
-            tabs.push({
-              content: response[i]?.content,
-              uid: response[i]?.uid,
-              is_rating: response[i]?.is_rating,
-            });
-          }
-          form.setFieldsValue({
-            users: tabs,
-          });
-          setLengthForm(tabs.length);
-        });
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const handleDirector = () => {
-    history.push("/evaluation/" + id);
-  };
 
   const addCart = (product) => {
     console.log(product);
@@ -212,49 +75,6 @@ const ProductDetail = () => {
     history.push("/cart");
   };
 
-  const onFinish = async (values) => {
-    console.log(values.users);
-    let tabs = [];
-    for (let i = 0; i < values.users.length; i++) {
-      tabs.push({
-        scope:
-          values.users[i]?.scope == undefined ? null : values.users[i]?.scope,
-        comment:
-          values.users[i]?.comment == undefined
-            ? null
-            : values.users[i]?.comment,
-        question_uid: values.users[i]?.uid,
-      });
-    }
-    console.log(tabs);
-    setLoading(true);
-    try {
-      const dataForm = {
-        answers: tabs,
-      };
-      await axiosClient
-        .post("/event/" + id + "/answer", dataForm)
-        .then((response) => {
-          if (response === undefined) {
-            notification["error"]({
-              message: `Notification`,
-              description: "Answer event question failed",
-            });
-            setLoading(false);
-          } else {
-            notification["success"]({
-              message: `Notification`,
-              description: "Successfully answer event question",
-            });
-            setLoading(false);
-            form.resetFields();
-          }
-        });
-    } catch (error) {
-      throw error;
-    }
-  };
-
   const [reviews, setReview] = useState([]);
 
   const handleReviewFromSubmit = async (review) => {
@@ -281,6 +101,7 @@ const ProductDetail = () => {
         console.error(error);
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -289,12 +110,12 @@ const ProductDetail = () => {
         await productApi.getDetailProduct(id).then((item) => {
           setProductDetail(item);
         });
-        setLoading(false);
       } catch (error) {
         console.log("Failed to fetch event detail:" + error);
       }
     })();
     window.scrollTo(0, 0);
+    // eslint-disable-next-line
   }, [cartLength]);
 
   return (
@@ -321,6 +142,7 @@ const ProductDetail = () => {
             <Row gutter={12} style={{ marginTop: 20 }}>
               <Col span={8}>
                 <Card className="card_image" bordered={false}>
+                  {/* eslint-disable-next-line */}
                   <img
                     src={productDetail.image?.replace(
                       "http://localhost:3100",
@@ -361,6 +183,7 @@ const ProductDetail = () => {
                     </div>
                     <div class="box-content-promotion">
                       <p class="box-product-promotion-number">1</p>
+                      {/* eslint-disable-next-line */}
                       <a>
                         Thu cũ lên đời - Giá thu cao nhất - Tặng thêm 1 triệu
                         khi lên đời
@@ -404,8 +227,9 @@ const ProductDetail = () => {
                                 <i class="icondetail-doimoi"></i>
                               </div>
                               <p>
-                                Hư gì đổi nấy <b>12 tháng</b> tại TCSTORE (miễn
-                                phí tháng đầu) <a href="#"></a>
+                                Hư gì đổi nấy <b> 12 tháng </b> tại TCSTORE
+                                (miễn phí tháng đầu)
+                                {/* eslint-disable-next-line */}
                                 <a title="Chính sách đổi trả">Xem chi tiết</a>
                               </p>
                             </li>
@@ -432,7 +256,9 @@ const ProductDetail = () => {
                               </div>
                               <p>
                                 Bộ sản phẩm gồm: Dây sạc, túi chống sốc...{" "}
-                                {productDetail.name} <a href="#">Xem hình</a>
+                                {productDetail.name}
+                                {/* eslint-disable-next-line */}
+                                <a href="#">Xem hình</a>
                               </p>
                             </li>
                           </ul>
