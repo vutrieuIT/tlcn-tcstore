@@ -3,11 +3,8 @@ import "./home.css";
 import Texty from "rc-texty";
 import TweenOne from "rc-tween-one";
 import QueueAnim from "rc-queue-anim";
-import eventApi from "../../apis/eventApi";
 import productApi from "../../apis/productApi";
 import { OverPack } from "rc-scroll-anim";
-//import { DateTime } from "../../utils/dateTime";
-//import handshake from "../../assets/icon/handshake.svg";
 import promotion1 from "../../assets/home/banner-1.png";
 import bn1 from "../../assets/image/banner/bn1.png";
 import bn2 from "../../assets/image/banner/bn2.png";
@@ -23,56 +20,29 @@ import service10 from "../../assets/image/service/service10.png";
 import ProductItem from "../../components/ProductItemComponent";
 
 import { useHistory } from "react-router-dom";
-import { RightOutlined, QrcodeOutlined } from "@ant-design/icons";
+import { RightOutlined } from "@ant-design/icons";
 import {
   Col,
   Row,
-  Button,
   Pagination,
   Spin,
   Carousel,
   Card,
   List,
   BackTop,
-  Affix,
-  Avatar,
-  Badge,
-  Rate,
 } from "antd";
 
-const DATE_TIME_FORMAT = "DD - MM - YYYY";
-const gridStyle = {
-  width: "25%",
-  textAlign: "center",
-};
-
 const Home = ({ keyWord }) => {
-  const [event, setEvent] = useState([]);
   const [productList, setProductList] = useState([]);
-  const [eventListHome, setEventListHome] = useState([]);
-  const [totalEvent, setTotalEvent] = useState(Number);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  // eslint-disable-next-line
   const [pageSize, setPageSize] = useState(4);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [productsShow, setProductsShow] = useState([]);
-  const [productsPC, setProductsPC] = useState([]);
-  const [productsTablet, setProductsTablet] = useState([]);
   const [filterCategory, setFilterCategory] = useState(null);
 
   const history = useHistory();
-
-  const handlePage = async (page, size) => {
-    try {
-      const response = await eventApi.getListEvents(page, 8);
-      setEventListHome(response.data);
-      setTotalEvent(response.total_count);
-      setCurrentPage(page);
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
-    }
-  };
 
   const handleReadMore = (id) => {
     console.log(id);
@@ -117,9 +87,13 @@ const Home = ({ keyWord }) => {
   }, [products]);
 
   useEffect(() => {
-    // Gọi renderItemList để cập nhật productsShow dựa trên productList
-    const updateProductShow = renderItemList(1, productList);
-    setProductsShow(updateProductShow);
+    const updateProductsShow = () => {
+      const updatedProductShow = renderItemList(1, productList);
+      setProductsShow(updatedProductShow);
+    };
+
+    updateProductsShow();
+    // eslint-disable-next-line
   }, [productList]);
 
   useEffect(() => {
@@ -128,9 +102,9 @@ const Home = ({ keyWord }) => {
         const searchList = await products.filter((item) =>
           item.name.toLowerCase().includes(keyWord.toLowerCase())
         );
-        setProductList(searchList); // Cập nhật danh sách sản phẩm theo từ khóa
+        setProductList(searchList);
       } else {
-        setProductList(products); // Nếu không có từ khóa, sử dụng danh sách sản phẩm gốc
+        setProductList(products);
       }
     };
 
@@ -145,8 +119,6 @@ const Home = ({ keyWord }) => {
           limit: 100,
         });
         setProductList(response.data.docs);
-        setTotalEvent(response);
-        setLoading(false);
       } catch (error) {
         console.log("Failed to fetch event list:" + error);
       }
@@ -165,11 +137,11 @@ const Home = ({ keyWord }) => {
         setProducts(response.data?.docs);
         console.log("api call products ", products);
         renderItemList(1, response.data.docs);
-        setProductsPC(response.data.docs);
       } catch (error) {
         console.log(error);
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -212,7 +184,7 @@ const Home = ({ keyWord }) => {
                   <img className="c-image" src={bn1} alt="" />
                 </div>
                 <div className="img">
-                  <img className="c-image" src={bn2} />
+                  <img className="c-image" src={bn2} alt="" />
                 </div>
                 <div className="img">
                   <img className="c-image" src={bn3} alt="" />
@@ -223,7 +195,7 @@ const Home = ({ keyWord }) => {
         </div>
 
         <div className="container-home container">
-          <img src={promotion1} className="promotion1"></img>
+          <img src={promotion1} className="promotion1" alt=""></img>
         </div>
 
         <div className="heading_slogan"></div>
@@ -234,7 +206,7 @@ const Home = ({ keyWord }) => {
               bordered={false}
               className="card_suggest card_why card_slogan"
             >
-              <img src={service6}></img>
+              <img src={service6} alt=""></img>
               <p class="card-text mt-3 fw-bold text-center">
                 Nhanh chóng & Bảo mật <br />
                 Vận chuyển
@@ -246,7 +218,7 @@ const Home = ({ keyWord }) => {
               bordered={false}
               className="card_suggest card_why card_slogan"
             >
-              <img src={service7}></img>
+              <img src={service7} alt=""></img>
               <p class="card-text mt-3 fw-bold text-center">
                 Đảm bảo 100% <br />
                 Chính Hãng
@@ -258,7 +230,7 @@ const Home = ({ keyWord }) => {
               bordered={false}
               className="card_suggest card_why card_slogan"
             >
-              <img src={service8}></img>
+              <img src={service8} alt=""></img>
               <p class="card-text mt-3 fw-bold text-center">
                 24 Giờ <br /> Đổi Trả
               </p>
@@ -269,7 +241,7 @@ const Home = ({ keyWord }) => {
               bordered={false}
               className="card_suggest card_why card_slogan"
             >
-              <img src={service9}></img>
+              <img src={service9} alt=""></img>
               <p class="card-text mt-3 fw-bold text-center">
                 Giao hàng <br /> Nhanh nhất
               </p>
@@ -280,7 +252,7 @@ const Home = ({ keyWord }) => {
               bordered={false}
               className="card_suggest card_why card_slogan"
             >
-              <img src={service10}></img>
+              <img src={service10} alt=""></img>
               <p class="card-text mt-3 fw-bold text-center">
                 Hỗ trợ <br /> Nhanh chóng
               </p>
@@ -300,6 +272,7 @@ const Home = ({ keyWord }) => {
 
           <Row justify="center" className="container-home container" key="1">
             <div className="title-category">
+              {/* eslint-disable-next-line */}
               <a
                 // href="https://cellphones.com.vn/mobile.html"
                 class="title"
@@ -395,9 +368,8 @@ const Home = ({ keyWord }) => {
                 {/*<span class="ec-banner-stitle ">OUTLET SALE</span>
                                 <span class="ec-banner-title">WiFi IP Camera 36</span>*/}
                 <span class="ec-banner-btn">
-                  <a href="#" class="btn-primary">
-                    Mua Ngay
-                  </a>
+                  {/* eslint-disable-next-line */}
+                  <a class="btn-primary">Mua Ngay</a>
                 </span>
               </div>
             </div>
@@ -407,9 +379,8 @@ const Home = ({ keyWord }) => {
                 {/*<span class="ec-banner-stitle">lenovo tablets</span>
                                 <span class="ec-banner-title">UP to 70% OFF</span>*/}
                 <span class="ec-banner-btn">
-                  <a href="#" class="btn-primary">
-                    Mua Ngay
-                  </a>
+                  {/* eslint-disable-next-line */}
+                  <a class="btn-primary">Mua Ngay</a>
                 </span>
               </div>
             </div>
