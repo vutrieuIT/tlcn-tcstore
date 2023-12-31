@@ -9,7 +9,6 @@ import Footer from "../components/layout/Footer/footer";
 import Header from "../components/layout/Header/header";
 import Attendance from "../pages/Attendance/attendance";
 import ProductDetail from "../pages/Product/productDetail/productDetail";
-import EventDetail from "../pages/Event/EventDetail/eventDetail";
 import Profile from "../pages/Profile/profile";
 import Cart from "../pages/Purchase/Cart/cart";
 import Pay from "../pages/Purchase/Pay/pay";

@@ -84,7 +84,7 @@ const Attendance = () => {
     return (
         <div>
             <Spin spinning={loading}>
-                {processScan == false ?
+                {processScan === false ?
                     <div id="qrcode" style={{ textAlign: "center", width: 250, height: 250 }}>
                         <QrReader
                             delay={1000}

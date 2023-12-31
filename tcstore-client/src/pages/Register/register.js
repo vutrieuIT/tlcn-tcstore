@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./register.css";
-import { DatePicker, Input } from "antd";
+import { Input } from "antd";
 import {
   Card,
-  Table,
-  Space,
-  Tag,
-  PageHeader,
-  Divider,
   Form,
   Button,
   notification,
@@ -17,26 +12,15 @@ import {
   LockOutlined,
   PhoneOutlined,
   MailOutlined,
-  AimOutlined,
-  MoneyCollectOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import axiosClient from "../../apis/axiosClient";
 import logo from "../../assets/header/Techcomp.png";
 
-const { Search } = Input;
-
 const RegisterCustomer = () => {
-  const [delivery, setDelivery] = useState([]);
   let history = useHistory();
 
   const onFinish = async (values) => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-    var date = yyyy + "-" + mm + "-" + dd;
-
     console.log(values);
     try {
       const formatData = {
