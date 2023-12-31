@@ -3,7 +3,6 @@ import axiosClient from "../../../apis/axiosClient";
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, Spin, notification, message } from 'antd';
 import "./accountCreate.css";
-import { baseUrl } from "../../../utils/common";
 
 const AccountCreate = () => {
 
@@ -25,16 +24,16 @@ const AccountCreate = () => {
             await axiosClient.post("/user", formatData)
                 .then(response => {
                     console.log(response)
-                    if (response.message == "Validation failed: Phone has already been taken, Email has already been taken") {
+                    if (response.message === "Validation failed: Phone has already been taken, Email has already been taken") {
                         message.error('Phone Number and Email has already been taken');
                     } else
-                        if (response.message == "Validation failed: Email has already been taken") {
+                        if (response.message === "Validation failed: Email has already been taken") {
                             message.error('Email has already been taken');
                         } else
-                            if (response.message == "Validation failed: Phone has already been taken") {
+                            if (response.message === "Validation failed: Phone has already been taken") {
                                 message.error('Validation failed: Phone has already been taken');
                             } else
-                                if (response == undefined) {
+                                if (response === undefined) {
                                     notification["error"]({
                                         message: `Thông báo`,
                                         description:
