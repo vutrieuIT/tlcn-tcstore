@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import "./sidebar.css";
 import { Layout, Menu } from 'antd';
 import { useHistory, useLocation } from "react-router-dom";
-import { UserOutlined, ContainerOutlined, DashboardOutlined, BarsOutlined, ProfileOutlined, ShoppingOutlined, AuditOutlined, ShoppingCartOutlined, FormOutlined, NotificationOutlined } from '@ant-design/icons';
+import { UserOutlined, DashboardOutlined, BarsOutlined, ShoppingOutlined, ShoppingCartOutlined, FormOutlined } from '@ant-design/icons';
 
-const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 function Sidebar() {
@@ -55,78 +54,6 @@ function Sidebar() {
     //   link: "/notification",
     //   icon: <NotificationOutlined />
     // },
-  ];
-
-  const menuSubEventAdmin = [
-    {
-      key: "event",
-      title: "Event Pending",
-      link: "/event",
-      icon: <ContainerOutlined />
-    },
-    {
-      key: "event-approved",
-      title: "Event Approved",
-      link: "/event-approved",
-      icon: <ContainerOutlined />
-    },
-    {
-      key: "event-reject",
-      title: "Event Reject",
-      link: "/event-reject",
-      icon: <ContainerOutlined />
-    }
-  ];
-
-  const menuSubEventStudentAdmin = [
-    {
-      key: "organizing-event",
-      title: "Upcoming Event",
-      link: "/organizing-event",
-      icon: <AuditOutlined />
-    },
-    {
-      key: "organized-event",
-      title: "Organized Event",
-      link: "/organized-event",
-      icon: <AuditOutlined />
-    }
-  ];
-
-  const menuSidebarCreator = [
-    {
-      key: "my-event",
-      title: "My Event",
-      link: "/my-event",
-      icon: <FormOutlined />
-    },
-    {
-      key: "notification",
-      title: "Notification",
-      link: "/notification",
-      icon: <NotificationOutlined />
-    },
-  ];
-
-  const menuSidebarApprove = [
-    {
-      key: "dash-board",
-      title: "Dashboards",
-      link: "/dash-board",
-      icon: <DashboardOutlined />
-    },
-    {
-      key: "my-event",
-      title: "My Event",
-      link: "/my-event",
-      icon: <FormOutlined />
-    },
-    {
-      key: "notification",
-      title: "Notification",
-      link: "/notification",
-      icon: <NotificationOutlined />
-    },
   ];
 
   const navigate = (link, key) => {
