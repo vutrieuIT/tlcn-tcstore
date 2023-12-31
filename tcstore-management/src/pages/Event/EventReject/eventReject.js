@@ -92,7 +92,7 @@ const EventReject = () => {
                         </PageHeader>
                     </div>
                 </div>
-                {event.length == 0 ?
+                {event.length === 0 ?
                     <div id="event" style={{ background: "#FFFFFF", padding: 80 }} >
                         <NoData />
                     </div>
@@ -102,7 +102,7 @@ const EventReject = () => {
                     return (
                         <div key={eventDetail.uid}>
                             <div id="event">
-                                {eventDetail.is_online == true ?
+                                {eventDetail.is_online === true ?
                                     <Badge.Ribbon text="ONLINE" style={{ paddingRight: 20 }}>
                                         <div id="event_container__reject" style={{ padding: 12 }}>
                                             <Card bordered={false} style={{ borderRadius: 6 }}>
