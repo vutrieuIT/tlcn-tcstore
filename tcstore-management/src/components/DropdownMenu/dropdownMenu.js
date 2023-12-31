@@ -38,6 +38,7 @@ function DropdownAvatar() {
   const avatar = (
     <Menu>
       <Menu.Item icon={<UserOutlined />}>
+        {/* eslint-disable-next-line */}
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -47,11 +48,13 @@ function DropdownAvatar() {
         </a>
       </Menu.Item>
       <Menu.Item icon={<SettingOutlined />}>
+        {/* eslint-disable-next-line */}
         <a target="_blank" rel="noopener noreferrer">
           Cài đặt
         </a>
       </Menu.Item>
       <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}>
+        {/* eslint-disable-next-line */}
         <a target="_blank" rel="noopener noreferrer">
           Thoát
         </a>
