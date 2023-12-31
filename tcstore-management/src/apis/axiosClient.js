@@ -24,7 +24,7 @@ axiosClient.interceptors.response.use((response) => {
     }
     return response;
 }, (error) => {
-    if(error.response.data.message == "Signature has expired"){
+    if(error.response.data.message === "Signature has expired"){
         history.replace("/");
         localStorage.clear();
     }
