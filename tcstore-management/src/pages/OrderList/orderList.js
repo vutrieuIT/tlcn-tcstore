@@ -3,17 +3,11 @@ import "./orderList.css";
 import {
   Col,
   Row,
-  Typography,
   Spin,
   Button,
   PageHeader,
-  Card,
-  Badge,
-  Empty,
   Input,
-  Space,
   Form,
-  Pagination,
   Modal,
   Popconfirm,
   notification,
@@ -24,34 +18,15 @@ import {
   Table,
 } from "antd";
 import {
-  AppstoreAddOutlined,
-  QrcodeOutlined,
   DeleteOutlined,
-  PlusOutlined,
-  EyeOutlined,
-  ExclamationCircleOutlined,
-  SearchOutlined,
-  CalendarOutlined,
-  UserOutlined,
-  TeamOutlined,
   HomeOutlined,
-  HistoryOutlined,
   ShoppingCartOutlined,
-  FormOutlined,
-  TagOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import eventApi from "../../apis/eventApi";
 import orderApi from "../../apis/orderApi";
-import { useHistory } from "react-router-dom";
-import { DateTime } from "../../utils/dateTime";
-import ProductList from "../ProductList/productList";
 import axiosClient from "../../apis/axiosClient";
 
 const { Option } = Select;
-const { confirm } = Modal;
-const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
-const { Title } = Typography;
 
 const OrderList = () => {
   const [order, setOrder] = useState([]);
@@ -60,15 +35,11 @@ const OrderList = () => {
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const [form2] = Form.useForm();
+  // eslint-disable-next-line
   const [total, setTotalList] = useState();
+  // eslint-disable-next-line
   const [currentPage, setCurrentPage] = useState(1);
   const [id, setId] = useState();
-
-  const history = useHistory();
-
-  const showModal = () => {
-    setOpenModalCreate(true);
-  };
 
   const handleOkUser = async (values) => {
     setLoading(true);
@@ -175,10 +146,6 @@ const OrderList = () => {
     }
   };
 
-  const handleDetailView = (id) => {
-    history.push("/category-detail/" + id);
-  };
-
   const handleEditOrder = (id) => {
     setOpenModalUpdate(true);
     (async () => {
@@ -213,10 +180,6 @@ const OrderList = () => {
     }
   };
 
-  function NoData() {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
-  }
-
   const columns = [
     {
       title: "ID",
@@ -227,18 +190,21 @@ const OrderList = () => {
       title: "Tên",
       dataIndex: "user",
       key: "user",
+      // eslint-disable-next-line
       render: (text, record) => <a>{text.username}</a>,
     },
     {
       title: "Email",
       dataIndex: "user",
       key: "user",
+      // eslint-disable-next-line
       render: (text, record) => <a>{text.email}</a>,
     },
     {
       title: "Tổng tiền",
       dataIndex: "orderTotal",
       key: "orderTotal",
+      // eslint-disable-next-line
       render: (text) => <a>{text}</a>,
     },
     {
