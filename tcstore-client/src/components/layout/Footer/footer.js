@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Col, Row, Divider } from "antd";
+import { Col, Row } from "antd";
 import { SocialIcon } from 'react-social-icons';
 import "./footer.css";
 import GHN from '../../../assets/footer/GHN.png';
