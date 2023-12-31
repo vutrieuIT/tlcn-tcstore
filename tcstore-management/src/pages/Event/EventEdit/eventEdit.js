@@ -148,30 +148,34 @@ const EventEdit = () => {
     }
 
     useEffect(() => {
-        (async () => {
-            try {
-                const response_one = await eventApi.getDetailEvent(id);
-                form.setFieldsValue({
-                    avatar: response_one.avatar,
-                    event_name: response_one.event_name,
-                    rangePicker: [moment(response_one.start_at), moment(response_one.end_at)],
-                    organization: response_one.organization,
-                    is_online: response_one.is_online,
-                    size: response_one.size,
-                    location: response_one.location,
-                    type_event: response_one.type_event,
-                    score: response_one.scope,
-                });
-                const response = await eventApi.getTypeEvent();
-                setTypeEvent(response.type_event);
-                setDescriptionEdit(response_one.description);
-                setImageEdit(response_one.avatar);
-                setLoading(false);
-            } catch (error) {
-                throw error;
-            }
-        })();
-        window.scrollTo(0, 0);
+      (async () => {
+        try {
+          const response_one = await eventApi.getDetailEvent(id);
+          form.setFieldsValue({
+            avatar: response_one.avatar,
+            event_name: response_one.event_name,
+            rangePicker: [
+              moment(response_one.start_at),
+              moment(response_one.end_at),
+            ],
+            organization: response_one.organization,
+            is_online: response_one.is_online,
+            size: response_one.size,
+            location: response_one.location,
+            type_event: response_one.type_event,
+            score: response_one.scope,
+          });
+          const response = await eventApi.getTypeEvent();
+          setTypeEvent(response.type_event);
+          setDescriptionEdit(response_one.description);
+          setImageEdit(response_one.avatar);
+          setLoading(false);
+        } catch (error) {
+          throw error;
+        }
+      })();
+      window.scrollTo(0, 0);
+      // eslint-disable-next-line
     }, [])
 
     return (
@@ -245,7 +249,7 @@ const EventEdit = () => {
                             <InputNumber style={{ width: "100%" }} min={1} max={9999} placeholder="Number of participants" ></InputNumber>
                         </Form.Item>
 
-                        {localStorage.getItem("role") == "admin" || localStorage.getItem("role") == "approval" ?
+                        {localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "approval" ?
                             <Form.Item
                                 name="score"
                                 label="Score"
