@@ -11,106 +11,108 @@ const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
 const OrganizingEvent = () => {
 
     const [eventOrganizing, setEventOrganizing] = useState([]);
-    const [eventTemp, setEventTemp] = useState([]);
     const [loading, setLoading] = useState(true);
     const [totalEventOrganizing, setTotalEventOrganizing] = useState(Number);
     const [page, setPage] = useState(1);
-    const [emailEvent, setEmailEvent] = useState([]);
 
     const history = useHistory();
 
     const columns = [
-        {
-            title: 'STT',
-            dataIndex: 'id',
-            key: 'index',
-            render: (value, item, index) => (
-                (page - 1) * 10 + (index + 1)
-            ),
-        },
-        {
-            title: 'Event Name',
-            dataIndex: 'event_name',
-            key: 'event_name',
-        },
-        {
-            title: 'Organization',
-            dataIndex: 'organization',
-            key: 'organization'
-        },
-        {
-            title: 'Start Time',
-            dataIndex: 'start_at',
-            key: 'start_at',
-            render: (start_at) => (
-                <Space size="middle">
-                    <p className="start_Time">{DateTime(start_at, DATE_TIME_FORMAT)}</p>
-                </Space>
-            ),
-            width: '15%',
-        },
-        {
-            title: 'End Time',
-            dataIndex: 'end_at',
-            key: 'end_at',
-            render: (end_at) => (
-                <Space size="middle">
-                    <p className="end_Time">{DateTime(end_at, DATE_TIME_FORMAT)}</p>
-                </Space>
-            ),
-            width: '15%',
-        },
-        {
-            title: 'Number',
-            dataIndex: 'size',
-            key: 'size',
-            render: (text, row) => (
-                <Space size="middle">
-                    <p style={{ margin: 0 }}>{row.count_join_event}/{text}</p>
-                </Space>
-            ),
-        },
-        {
-            title: 'Status',
-            dataIndex: 'isActive',
-            key: 'isActive',
-            render: (isActive) => (
-                <Space size="middle">
-                    {
-                        <Tag color="blue" key={isActive}>
-                            ONGOING
-                        </Tag>
-                    }
-                </Space>
-            ),
-        },
-        {
-            title: 'Event Status',
-            dataIndex: 'is_online',
-            key: 'is_online',
-            render: (text) => (
-                <Space size="middle">
-                    {
-                        text == true ?
-                            <Tag color="cyan" key={text}>
-                                ONLINE
-                        </Tag> :
-                            <Tag color="orange" key={text}>
-                                OFFLINE
-                    </Tag>
-                    }
-                </Space>
-            ),
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a onClick={() => handleViewDetails(record.uid)}>View</a>
-                </Space>
-            ),
-        },
+      {
+        title: "STT",
+        dataIndex: "id",
+        key: "index",
+        render: (value, item, index) => (page - 1) * 10 + (index + 1),
+      },
+      {
+        title: "Event Name",
+        dataIndex: "event_name",
+        key: "event_name",
+      },
+      {
+        title: "Organization",
+        dataIndex: "organization",
+        key: "organization",
+      },
+      {
+        title: "Start Time",
+        dataIndex: "start_at",
+        key: "start_at",
+        render: (start_at) => (
+          <Space size="middle">
+            <p className="start_Time">{DateTime(start_at, DATE_TIME_FORMAT)}</p>
+          </Space>
+        ),
+        width: "15%",
+      },
+      {
+        title: "End Time",
+        dataIndex: "end_at",
+        key: "end_at",
+        render: (end_at) => (
+          <Space size="middle">
+            <p className="end_Time">{DateTime(end_at, DATE_TIME_FORMAT)}</p>
+          </Space>
+        ),
+        width: "15%",
+      },
+      {
+        title: "Number",
+        dataIndex: "size",
+        key: "size",
+        render: (text, row) => (
+          <Space size="middle">
+            <p style={{ margin: 0 }}>
+              {row.count_join_event}/{text}
+            </p>
+          </Space>
+        ),
+      },
+      {
+        title: "Status",
+        dataIndex: "isActive",
+        key: "isActive",
+        render: (isActive) => (
+          <Space size="middle">
+            {
+              <Tag color="blue" key={isActive}>
+                ONGOING
+              </Tag>
+            }
+          </Space>
+        ),
+      },
+      {
+        title: "Event Status",
+        dataIndex: "is_online",
+        key: "is_online",
+        render: (text) => (
+          <Space size="middle">
+            {
+              //  eslint-disable-next-line
+              text == true ? (
+                <Tag color="cyan" key={text}>
+                  ONLINE
+                </Tag>
+              ) : (
+                <Tag color="orange" key={text}>
+                  OFFLINE
+                </Tag>
+              )
+            }
+          </Space>
+        ),
+      },
+      {
+        title: "Action",
+        key: "action",
+        render: (text, record) => (
+          <Space size="middle">
+            {/*  eslint-disable-next-line */}
+            <a onClick={() => handleViewDetails(record.uid)}>View</a>
+          </Space>
+        ),
+      },
     ];
 
     const handleViewDetails = async (id) => {
