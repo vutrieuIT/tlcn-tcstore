@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import axiosClient from "../../apis/axiosClient";
 import "./notification.css";
 import { Button, notification, Row, Col, Form, Input, Select, Spin, Layout, List, Menu, Modal, Avatar, Image, Breadcrumb } from 'antd';
-import { FormOutlined, HomeOutlined, MailOutlined, NotificationOutlined } from '@ant-design/icons';
+import { HomeOutlined, MailOutlined, NotificationOutlined } from '@ant-design/icons';
 import eventApi from "../../apis/eventApi";
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 
-const { confirm } = Modal;
 const { Option } = Select;
-const { SubMenu } = Menu;
 const { Sider, Content } = Layout;
 
 const Notification = () => {
@@ -37,7 +35,7 @@ const Notification = () => {
         console.log(values.name_event)
         setLoading(true);
         try {
-            if (localStorage.getItem("role") == "creator") {
+            if (localStorage.getItem("role") === "creator") {
                 await axiosClient.get("/event/" + values.name_event + "/take_part_in_event/email").then(res => {
                     console.log(res.email)
                     const emails = {
@@ -236,7 +234,7 @@ const Notification = () => {
                                     minHeight: 500,
                                 }}
                             >
-                                {viewContent == 1 ?
+                                {viewContent === 1 ?
                                     <List
                                         itemLayout="horizontal"
                                         dataSource={dataEmail}
@@ -318,7 +316,7 @@ const Notification = () => {
                                     <Input placeholder="Sender's name" />
                                 </Form.Item>
 
-                                {localStorage.getItem("role") == "creator" ?
+                                {localStorage.getItem("role") === "creator" ?
                                     <Form.Item
                                         name="name_event"
                                         label="To Event "
