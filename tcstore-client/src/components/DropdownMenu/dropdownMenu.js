@@ -3,7 +3,6 @@ import { Avatar, Dropdown, Row } from "antd";
 import { Menu } from "antd";
 import {
   UserOutlined,
-  SettingOutlined,
   LogoutOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -55,6 +54,7 @@ function DropdownAvatar() {
   const avatarPrivate = (
     <Menu>
       <Menu.Item icon={<UserOutlined />}>
+        {/*  eslint-disable-next-line */}
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -64,6 +64,7 @@ function DropdownAvatar() {
         </a>
       </Menu.Item>
       <Menu.Item icon={<ShoppingCartOutlined />}>
+        {/*  eslint-disable-next-line */}
         <a
           target="_blank"
           rel="noopener noreferrer"
@@ -73,6 +74,7 @@ function DropdownAvatar() {
         </a>
       </Menu.Item>
       <Menu.Item key="3" icon={<LogoutOutlined />} onClick={Logout}>
+        {/*  eslint-disable-next-line */}
         <a target="_blank" rel="noopener noreferrer">
           Thoát
         </a>
@@ -83,11 +85,13 @@ function DropdownAvatar() {
   const avatarPublic = (
     <Menu>
       <Menu.Item icon={<UserOutlined />}>
+        {/*  eslint-disable-next-line */}
         <a target="_blank" rel="noopener noreferrer" onClick={Login}>
           Đăng nhập
         </a>
       </Menu.Item>
       <Menu.Item icon={<UserOutlined />}>
+        {/*  eslint-disable-next-line */}
         <a target="_blank" rel="noopener noreferrer" onClick={register}>
           Đăng ký
         </a>
