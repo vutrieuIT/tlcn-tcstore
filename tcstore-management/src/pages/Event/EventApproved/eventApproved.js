@@ -5,8 +5,8 @@ import userApi from "../../../apis/userApi";
 import eventApi from "../../../apis/eventApi";
 import { useHistory } from 'react-router-dom';
 import { DateTime } from "../../../utils/dateTime";
-import { Col, Row, Typography, Spin, Button, PageHeader, Card, Input, Badge, Pagination, Modal, Popconfirm, notification, BackTop, Tag, Breadcrumb, Empty, Space } from 'antd';
-import { ContainerOutlined, EyeOutlined, UserAddOutlined, UserOutlined, TeamOutlined, HomeOutlined, HistoryOutlined, ExclamationCircleOutlined, QrcodeOutlined, PlusOutlined, AppstoreAddOutlined } from '@ant-design/icons';
+import { Col, Row, Typography, Spin, Button, PageHeader, Card, Input, Badge, Pagination, Modal, Popconfirm, notification, BackTop, Tag, Breadcrumb, Empty } from 'antd';
+import { ContainerOutlined, EyeOutlined, UserAddOutlined, UserOutlined, TeamOutlined, HomeOutlined, HistoryOutlined, ExclamationCircleOutlined, QrcodeOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { confirm } = Modal;
@@ -31,10 +31,6 @@ const EventApproved = () => {
     const hideDownload = () => {
         downloadQR();
         setVisible(false);
-    }
-
-    const handleModal = () => {
-        history.push("/event-create");
     }
 
     const handleListEvent = async () => {
@@ -228,7 +224,7 @@ const EventApproved = () => {
                         </PageHeader>
                     </div>
                 </div>
-                {event.length == 0 ?
+                {event.length === 0 ?
                     <div id="event" style={{ background: "#FFFFFF", padding: 80 }} >
                         <NoData />
                     </div>
@@ -238,7 +234,7 @@ const EventApproved = () => {
                     return (
                         <div key={eventDetail.uid}>
                             <div id="event">
-                                {eventDetail.is_online == true ?
+                                {eventDetail.is_online === true ?
                                     <Badge.Ribbon text="ONLINE" style={{ paddingRight: 20 }}>
                                         <div id="event_container__approve" style={{ padding: 12 }}>
                                             <Card bordered={false} style={{ borderRadius: 6 }}>
@@ -292,7 +288,7 @@ const EventApproved = () => {
                                                                 >{"View"}
                                                                 </Button>
                                                                 {
-                                                                    eventDetail.creator_event.qr_code_string && role != "approval" ?
+                                                                    eventDetail.creator_event.qr_code_string && role !== "approval" ?
                                                                         <Button
                                                                             shape="round"
                                                                             className="event__btn"
@@ -300,7 +296,7 @@ const EventApproved = () => {
                                                                             onClick={() => handleShowQRCode(eventDetail.uid)}
                                                                         >{"View QR"}
                                                                         </Button>
-                                                                        : !eventDetail.creator_event.qr_code_string && role != "approval" ?
+                                                                        : !eventDetail.creator_event.qr_code_string && role !== "approval" ?
                                                                             <Popconfirm
                                                                                 title="Are you sure create this QR code?"
                                                                                 onConfirm={() => handleCreateQRCode(eventDetail.uid)}
@@ -314,12 +310,12 @@ const EventApproved = () => {
                                                                             </Popconfirm> : ""
                                                                 }
                                                                 {
-                                                                    eventDetail.calendar?.meeting_url == false && eventDetail.status == "accept" && role != "approval" ?
+                                                                    eventDetail.calendar?.meeting_url === false && eventDetail.status === "accept" && role !== "approval" ?
                                                                         <Button
                                                                             className="event__btn"
                                                                             icon={<AppstoreAddOutlined />}
                                                                             onClick={() => showConfirm(eventDetail.uid)}>{"General Link"}
-                                                                        </Button> : eventDetail.is_online == true && eventDetail.status == "accept" ?
+                                                                        </Button> : eventDetail.is_online === true && eventDetail.status === "accept" ?
                                                                             <a href={eventDetail.calendar?.meeting_url}>
                                                                                 <Button
                                                                                     className="event__btn"
@@ -410,7 +406,7 @@ const EventApproved = () => {
                                                                             onClick={() => handleShowQRCode(eventDetail.uid)}
                                                                         >{"View QR"}
                                                                         </Button>
-                                                                        : !eventDetail.creator_event.qr_code_string && role != "approval" && eventDetail.creator_event.is_creator == false ?
+                                                                        : !eventDetail.creator_event.qr_code_string && role !== "approval" && eventDetail.creator_event.is_creator === false ?
                                                                             <Popconfirm
                                                                                 title="Are you sure create this QR code?"
                                                                                 onConfirm={() => handleCreateQRCode(eventDetail.uid)}
@@ -421,7 +417,7 @@ const EventApproved = () => {
                                                                                     className="event__btn"
                                                                                     icon={<AppstoreAddOutlined />} >{"Create QR"}
                                                                                 </Button>
-                                                                            </Popconfirm> : eventDetail.creator_event.is_creator == true ?
+                                                                            </Popconfirm> : eventDetail.creator_event.is_creator === true ?
                                                                                 <Popconfirm
                                                                                     title="Are you sure create this QR code?"
                                                                                     onConfirm={() => handleCreateQRCode(eventDetail.uid)}
