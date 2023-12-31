@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./event.css";
 import { DateTime } from "../../utils/dateTime";
-import { Typography, Tag, Spin, Tabs, Menu, Layout, Skeleton, BackTop, List, Badge } from "antd";
+import { Typography, Tag, Spin, Tabs, Layout, Skeleton, BackTop, List, Badge } from "antd";
 import { HistoryOutlined, TeamOutlined, UserOutlined, ContainerOutlined } from '@ant-design/icons';
 import eventApi from "../../apis/eventApi";
 import { useHistory } from 'react-router-dom';
@@ -18,7 +18,6 @@ const Event = () => {
     const [event, setEvent] = useState([]);
     const [eventJoined, setEventJoined] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [totalEvent, setTotalEvent] = useState(Number);
     const imageRandom = [
         "https://images.vietnamworks.com/logo/500x600_114029.jpg",
         "https://images.vietnamworks.com/logo/500x600_113854.png",
@@ -50,7 +49,6 @@ const Event = () => {
             await eventApi.getListEvents().then((event) => {
                 let temp = event.data;
                 setEvent(temp);
-                setTotalEvent(temp.total_count);
                 setLoading(false);
             });
 
@@ -75,70 +73,6 @@ const Event = () => {
 
         }, 500);
     }, [])
-
-    const menu = (
-        <Menu>
-            <Menu.Item key="0" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                All event types
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="1" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Online
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="2" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Offline
-            </Menu.Item>
-        </Menu>
-    );
-
-    const menuEvent = (
-        <Menu>
-            <Menu.Item key="0" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                All event
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="1" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Going On
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="2" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Up Coming
-            </Menu.Item>
-        </Menu>
-    );
-
-    const menuEventClose = (
-        <Menu>
-            <Menu.Item key="0" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                All status
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="1" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Form is open
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="2" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Have evaluated
-            </Menu.Item>
-        </Menu>
-    );
-
-    const menuEventAttendance = (
-        <Menu>
-            <Menu.Item key="0" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                All status
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="1" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Form is open
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="2" style={{ paddingLeft: 20, paddingRight: 20 }}>
-                Have evaluated
-            </Menu.Item>
-        </Menu>
-    )
 
     return (
         <Layout className="layout-default">
@@ -169,7 +103,7 @@ const Event = () => {
                                             dataSource={event}
                                             renderItem={item => (
                                                 <div>
-                                                    {item.is_online == true ?
+                                                    {item.is_online === true ?
                                                         <Badge.Ribbon text="ONLINE">
                                                             <List.Item
                                                                 key={item.title}
@@ -271,7 +205,7 @@ const Event = () => {
                                                 dataSource={eventJoined}
                                                 renderItem={item => (
                                                     <div>
-                                                        {item.is_online == true ?
+                                                        {item.is_online === true ?
                                                             <Badge.Ribbon text="ONLINE">
                                                                 <List.Item
                                                                     key={item.title}
@@ -299,10 +233,10 @@ const Event = () => {
                                                                     </svg>  {DateTime(item.start_at, DATE_TIME_FORMAT)} - {DateTime(item.end_at, DATE_TIME_FORMAT)}</p>
                                                                     <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><TeamOutlined /> Number Of Participants: <Tag color="blue">{item.count_join_event}/{item.size}</Tag></p>
                                                                     {
-                                                                        item.is_close && item.form_close == false && item.join_event.is_feeback == false ?
+                                                                        item.is_close && item.form_close === false && item.join_event.is_feeback === false ?
                                                                             <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Waiting for evaluate</Tag></p> :
-                                                                            item.is_close && item.join_event.is_feeback == true ? <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Have evaluated</Tag></p> :
-                                                                                item.is_close && item.form_close && item.join_event.is_feeback == false ?
+                                                                            item.is_close && item.join_event.is_feeback === true ? <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Have evaluated</Tag></p> :
+                                                                                item.is_close && item.form_close && item.join_event.is_feeback === false ?
                                                                                     <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Not Yet Rated</Tag></p> :
                                                                                     item.is_close ?
                                                                                         <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed </Tag></p> :
@@ -343,10 +277,10 @@ const Event = () => {
                                                                     </svg>  {DateTime(item.start_at, DATE_TIME_FORMAT)} - {DateTime(item.end_at, DATE_TIME_FORMAT)}</p>
                                                                     <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><TeamOutlined /> Number Of Participants: <Tag color="blue">{item.count_join_event}/{item.size}</Tag></p>
                                                                     {
-                                                                        item.is_close && item.form_close == false && item.join_event.is_feeback == false ?
+                                                                        item.is_close && item.form_close === false && item.join_event.is_feeback === false ?
                                                                             <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Waiting for evaluate</Tag></p> :
-                                                                            item.is_close && item.join_event.is_feeback == true ? <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Have evaluated</Tag></p> :
-                                                                                item.is_close && item.form_close && item.join_event.is_feeback == false ?
+                                                                            item.is_close && item.join_event.is_feeback === true ? <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Have evaluated</Tag></p> :
+                                                                                item.is_close && item.form_close && item.join_event.is_feeback === false ?
                                                                                     <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed Event & Not Yet Rated</Tag></p> :
                                                                                     item.is_close ?
                                                                                         <p style={{ padding: 0, fontSize: 14, marginBottom: 1 }}><HistoryOutlined /> Status: <Tag color="green">Closed </Tag></p> :
