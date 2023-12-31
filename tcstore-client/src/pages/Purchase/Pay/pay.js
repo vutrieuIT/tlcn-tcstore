@@ -9,14 +9,9 @@ import { Button, Steps, Breadcrumb, notification, Form, Input, Radio } from 'ant
 import { AuditOutlined, HomeOutlined } from '@ant-design/icons';
 
 const Pay = () => {
-
     const [productDetail, setProductDetail] = useState([]);
     const [userData, setUserData] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [orderTotal, setOrderTotal] = useState([]);
-    const [visible, setVisible] = useState(false);
-    const [dataForm, setDataForm] = useState([]);
-    const [lengthForm, setLengthForm] = useState();
     const [form] = Form.useForm();
     let { id } = useParams();
     const history = useHistory();
@@ -38,7 +33,7 @@ const Pay = () => {
             await axiosClient.post("/order", formatData)
                 .then(response => {
                     console.log(response)
-                    if (response == undefined) {
+                    if (response === undefined) {
                         notification["error"]({
                             message: `Thông báo`,
                             description:
@@ -63,7 +58,7 @@ const Pay = () => {
             throw error;
         }
         setTimeout(function () {
-            setLoading(false);
+        
         }, 1000);
     }
 
@@ -105,7 +100,6 @@ const Pay = () => {
           setProductDetail(transformedData);
           console.log(transformedData);
           setUserData(response.user);
-          setLoading(false);
         } catch (error) {
           console.log("Failed to fetch event detail:" + error);
         }
