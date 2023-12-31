@@ -204,15 +204,23 @@ const CategoryList = () => {
       title: "Ảnh",
       dataIndex: "image",
       key: "image",
-      render: (image) => <img alt="" src={image} style={{ height: 60 }} />,
+      render: (image) => (
+        <img
+          alt=""
+          src={image?.replace(
+            "http://localhost:3100",
+            process.env.REACT_APP_HOST_URL
+          )}
+          style={{ height: 60 }}
+        />
+      ),
       width: "10%",
     },
     {
       title: "Tên",
       dataIndex: "name",
       key: "name",
-      // eslint-disable-next-line
-      render: (text) => <a>{text}</a>,
+      render: (text) => <p>{text}</p>,
     },
     {
       title: "Mô tả",

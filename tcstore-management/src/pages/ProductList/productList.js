@@ -274,7 +274,16 @@ const ProductList = () => {
       dataIndex: "image",
       key: "image",
       // eslint-disable-next-line
-      render: (image) => <img src={image} style={{ height: 80 }} />,
+      render: (image) => (
+        <img
+          src={image?.replace(
+            "http://localhost:3100",
+            process.env.REACT_APP_HOST_URL
+          )}
+          style={{ height: 80 }}
+          alt=""
+        />
+      ),
       width: "10%",
     },
     {
