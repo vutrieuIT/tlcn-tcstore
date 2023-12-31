@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styles from "./pay.css";
 import axiosClient from "../../../apis/axiosClient";
 import { useParams } from "react-router-dom";
-import eventApi from "../../../apis/eventApi";
 import userApi from "../../../apis/userApi";
 import productApi from "../../../apis/productApi";
 import { useHistory } from 'react-router-dom';
-import { Col, Row, Tag, Spin, Card } from "antd";
-import { DateTime } from "../../../utils/dateTime";
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { Typography, Button, Steps, Breadcrumb, Popconfirm, notification, Form, Input, Select, message, Radio } from 'antd';
-import { HistoryOutlined, AuditOutlined, CloseOutlined, UserOutlined, MehOutlined, TeamOutlined, HomeOutlined, CheckOutlined } from '@ant-design/icons';
-
-import Slider from "react-slick";
-
-const { Meta } = Card;
-const { Option } = Select;
-
-const { Title } = Typography;
-const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
-const { TextArea } = Input;
+import { Spin, Card } from "antd";
+import { Button, Steps, Breadcrumb, notification, Form, Input, Radio } from 'antd';
+import { AuditOutlined, HomeOutlined } from '@ant-design/icons';
 
 const Pay = () => {
 
@@ -31,13 +18,8 @@ const Pay = () => {
     const [dataForm, setDataForm] = useState([]);
     const [lengthForm, setLengthForm] = useState();
     const [form] = Form.useForm();
-    const [template_feedback, setTemplateFeedback] = useState();
     let { id } = useParams();
     const history = useHistory();
-
-    const hideModal = () => {
-        setVisible(false);
-    };
 
     const accountCreate = async (values) => {
         try {
@@ -90,140 +72,46 @@ const Pay = () => {
         history.push("/cart");
     }
 
-
-
-    const listEvent = () => {
-        setLoading(true);
-        (async () => {
-            try {
-                const response = await eventApi.getDetailEvent(id);
-                console.log(response);
-                setProductDetail(response);
-                setLoading(false);
-
-            } catch (error) {
-                console.log('Failed to fetch event detail:' + error);
-            }
-        })();
-        window.scrollTo(0, 0);
-    }
-
-    const handleDetailEvent = (id) => {
-        history.replace("/event-detail/" + id);
-        window.location.reload();
-        window.scrollTo(0, 0);
-    }
-
-    const getDataForm = async (uid) => {
-        try {
-            await axiosClient.get("/event/" + id + "/template_feedback/" + uid + "/question")
-                .then(response => {
-                    console.log(response);
-                    setDataForm(response);
-                    let tabs = [];
-                    for (let i = 0; i < response.length; i++) {
-                        tabs.push({
-                            content: response[i]?.content,
-                            uid: response[i]?.uid,
-                            is_rating: response[i]?.is_rating
-                        })
-                    }
-                    form.setFieldsValue({
-                        users: tabs
-                    })
-                    setLengthForm(tabs.length)
-                }
-                );
-
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    const handleDirector = () => {
-        history.push("/evaluation/" + id)
-    }
-
-    const onFinish = async (values) => {
-        console.log(values.users);
-        let tabs = [];
-        for (let i = 0; i < values.users.length; i++) {
-            tabs.push({
-                scope: values.users[i]?.scope == undefined ? null : values.users[i]?.scope,
-                comment: values.users[i]?.comment == undefined ? null : values.users[i]?.comment,
-                question_uid: values.users[i]?.uid,
-
-            })
-        }
-        console.log(tabs);
-        setLoading(true);
-        try {
-            const dataForm = {
-                "answers": tabs
-            }
-            await axiosClient.post("/event/" + id + "/answer", dataForm)
-                .then(response => {
-                    if (response === undefined) {
-                        notification["error"]({
-                            message: `Notification`,
-                            description:
-                                'Answer event question failed',
-
-                        });
-                        setLoading(false);
-                    }
-                    else {
-                        notification["success"]({
-                            message: `Notification`,
-                            description:
-                                'Successfully answer event question',
-
-                        });
-                        setLoading(false);
-                        form.resetFields();
-                    }
-                }
-                );
-
-        } catch (error) {
-            throw error;
-        }
-    };
-
     useEffect(() => {
-        (async () => {
-            try {
-                await productApi.getDetailProduct(id).then((item) => {
-                    setProductDetail(item);
-                });
-                const response = await userApi.getProfile();
-                console.log(response);
-                form.setFieldsValue({
-                    name: response.user.username,
-                    email: response.user.email,
-                    phone: response.user.phone,
-                });
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const transformedData = cart.map(({ _id: product, quantity, price }) => ({ product, quantity, price }));
-                let totalPrice = 0;
+      (async () => {
+        try {
+          await productApi.getDetailProduct(id).then((item) => {
+            setProductDetail(item);
+          });
+          const response = await userApi.getProfile();
+          console.log(response);
+          form.setFieldsValue({
+            name: response.user.username,
+            email: response.user.email,
+            phone: response.user.phone,
+          });
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const transformedData = cart.map(
+            ({ _id: product, quantity, price }) => ({
+              product,
+              quantity,
+              price,
+            })
+          );
+          let totalPrice = 0;
 
-                for (let i = 0; i < transformedData.length; i++) {
-                    let product = transformedData[i];
-                    let price = product.price * product.quantity;
-                    totalPrice += price;
-                }
+          for (let i = 0; i < transformedData.length; i++) {
+            let product = transformedData[i];
+            let price = product.price * product.quantity;
+            totalPrice += price;
+          }
 
-                setOrderTotal(totalPrice);
-                setProductDetail(transformedData)
-                console.log(transformedData);
-                setUserData(response.user);
-                setLoading(false);
-
-            } catch (error) {
-                console.log('Failed to fetch event detail:' + error);
-            }
-        })();
-        window.scrollTo(0, 0);
+          setOrderTotal(totalPrice);
+          setProductDetail(transformedData);
+          console.log(transformedData);
+          setUserData(response.user);
+          setLoading(false);
+        } catch (error) {
+          console.log("Failed to fetch event detail:" + error);
+        }
+      })();
+      window.scrollTo(0, 0);
+      // eslint-disable-next-line
     }, [])
 
     return (
