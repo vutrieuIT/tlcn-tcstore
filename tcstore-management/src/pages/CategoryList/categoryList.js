@@ -3,54 +3,29 @@ import "./categoryList.css";
 import {
   Col,
   Row,
-  Typography,
   Spin,
   Button,
   PageHeader,
-  Card,
-  Badge,
-  Empty,
   Input,
   Space,
   Form,
-  Pagination,
   Modal,
   Popconfirm,
   notification,
   BackTop,
   Tag,
   Breadcrumb,
-  Select,
   Table,
 } from "antd";
 import {
-  AppstoreAddOutlined,
-  QrcodeOutlined,
   DeleteOutlined,
   PlusOutlined,
-  EyeOutlined,
-  ExclamationCircleOutlined,
-  SearchOutlined,
-  CalendarOutlined,
-  UserOutlined,
-  TeamOutlined,
   HomeOutlined,
-  HistoryOutlined,
   ShoppingOutlined,
-  FormOutlined,
-  TagOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import eventApi from "../../apis/eventApi";
 import productApi from "../../apis/productsApi";
-import { useHistory } from "react-router-dom";
-import { DateTime } from "../../utils/dateTime";
-import ProductList from "../ProductList/productList";
 import axiosClient from "../../apis/axiosClient";
-
-const { confirm } = Modal;
-const DATE_TIME_FORMAT = "DD/MM/YYYY HH:mm";
-const { Title } = Typography;
 
 const CategoryList = () => {
   const [category, setCategory] = useState([]);
@@ -59,12 +34,8 @@ const CategoryList = () => {
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
   const [form2] = Form.useForm();
-  const [total, setTotalList] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
   const [id, setId] = useState();
   const [image, setImage] = useState();
-
-  const history = useHistory();
 
   const showModal = () => {
     setOpenModalCreate(true);
@@ -159,7 +130,6 @@ const CategoryList = () => {
         .getListCategory({ page: 1, limit: 10000 })
         .then((res) => {
           console.log(res);
-          setTotalList(res.totalDocs);
           setCategory(res.data.docs);
           setLoading(false);
         });
@@ -183,7 +153,6 @@ const CategoryList = () => {
             message: `Thông báo`,
             description: "Xóa danh mục thành công",
           });
-          setCurrentPage(1);
           handleCategoryList();
           setLoading(false);
         }
@@ -191,10 +160,6 @@ const CategoryList = () => {
     } catch (error) {
       console.log("Failed to fetch event list:" + error);
     }
-  };
-
-  const handleDetailView = (id) => {
-    history.push("/category-detail/" + id);
   };
 
   const handleEditCategory = (id) => {
@@ -219,7 +184,6 @@ const CategoryList = () => {
   const handleFilter = async (name) => {
     try {
       const res = await productApi.searchCategory(name);
-      setTotalList(res.totalDocs);
       setCategory(res.data.docs);
     } catch (error) {
       console.log("search to fetch category list:" + error);
@@ -229,10 +193,6 @@ const CategoryList = () => {
   const handleChangeImage = (event) => {
     setImage(event.target.files[0]);
   };
-
-  function NoData() {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
-  }
 
   const columns = [
     {
@@ -244,13 +204,14 @@ const CategoryList = () => {
       title: "Ảnh",
       dataIndex: "image",
       key: "image",
-      render: (image) => <img src={image} style={{ height: 60 }} />,
+      render: (image) => <img alt="" src={image} style={{ height: 60 }} />,
       width: "10%",
     },
     {
       title: "Tên",
       dataIndex: "name",
       key: "name",
+      // eslint-disable-next-line
       render: (text) => <a>{text}</a>,
     },
     {
@@ -313,7 +274,6 @@ const CategoryList = () => {
           .getListCategory({ page: 1, limit: 10000 })
           .then((res) => {
             console.log(res);
-            setTotalList(res.totalDocs);
             setCategory(res.data.docs);
             setLoading(false);
           });
