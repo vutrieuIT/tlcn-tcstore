@@ -4,25 +4,24 @@ import userApi from "../../../apis/userApi";
 import logo from "../../../assets/header/Techcomp.png";
 import DropdownAvatar from "../../DropdownMenu/dropdownMenu";
 import { useHistory } from "react-router-dom";
-import { Layout, Avatar, Badge, Row, Col, List, Popover, Modal } from "antd";
+import { Avatar, Badge, Row, Col, List, Popover, Modal } from "antd";
 import {
   BellOutlined,
   NotificationTwoTone,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import pn from "../../../assets/header/header-panner.png";
-import { AiOutlineSearch, AiOutlineCloseCircle } from "react-icons/ai";
-
-const { Header } = Layout;
+import { AiOutlineSearch } from "react-icons/ai";
 
 function Topbar({ keyWord, setKeyWord }) {
+  // eslint-disable-next-line
   const [countNotification, setCountNotification] = useState(0);
+  // eslint-disable-next-line
   const [notification, setNotification] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visiblePopover, setVisiblePopover] = useState(false);
   const [titleNotification, setTitleNotification] = useState("");
   const [contentNotification, setContentNotification] = useState("");
-  const [visibleDrawer, setVisibleDrawer] = useState(false);
   const [userData, setUserData] = useState([]);
   const [cart, setCart] = useState();
   const [tempKeyWord, setTempKeyWord] = useState("");
@@ -30,15 +29,7 @@ function Topbar({ keyWord, setKeyWord }) {
   const history = useHistory();
 
   const handleLink = (link) => {
-    setVisibleDrawer(false);
     history.push(link);
-  };
-
-  const Logout = async () => {
-    await userApi.logout();
-    localStorage.removeItem("client");
-    history.push("/login");
-    window.location.reload(false);
   };
 
   const content = (
@@ -55,13 +46,13 @@ function Topbar({ keyWord, setKeyWord }) {
                   />
                 }
                 title={
-                  <a
+                  <button
                     onClick={() =>
                       handleNotification(values.content, values.title)
                     }
                   >
                     {values.title}
-                  </a>
+                  </button>
                 }
                 description={
                   <p
@@ -79,6 +70,7 @@ function Topbar({ keyWord, setKeyWord }) {
 
   const handleNotification = (valuesContent, valuesTitile) => {
     setVisible(true);
+    // eslint-disable-next-line
     setVisiblePopover(visible !== visible);
     setContentNotification(valuesContent);
     setTitleNotification(valuesTitile);
@@ -90,14 +82,6 @@ function Topbar({ keyWord, setKeyWord }) {
 
   const handleOk = () => {
     setVisible(false);
-  };
-
-  const showDrawer = () => {
-    setVisibleDrawer(true);
-  };
-
-  const onClose = () => {
-    setVisibleDrawer(false);
   };
 
   const gotoTop = () => {
@@ -113,7 +97,7 @@ function Topbar({ keyWord, setKeyWord }) {
   const onKeyWordClick = () => {
     setKeyWord(tempKeyWord);
   };
-  
+
   useEffect(() => {
     setTempKeyWord(keyWord);
   }, [keyWord]);
@@ -148,6 +132,7 @@ function Topbar({ keyWord, setKeyWord }) {
                     style={{ height: "50px", cursor: "pointer" }}
                     src={logo}
                     onClick={() => handleLink("/home")}
+                    alt=""
                   ></img>
                 </Col>
                 <Col className="btn-st">
