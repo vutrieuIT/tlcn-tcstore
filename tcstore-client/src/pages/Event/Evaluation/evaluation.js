@@ -13,109 +13,15 @@ const Evaluation = () => {
 
     const [eventDetail, setEventDetail] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [suggest, setSuggest] = useState([]);
-    const [visible, setVisible] = useState(false);
-    const [dataForm, setDataForm] = useState([]);
-    const [lengthForm, setLengthForm] = useState();
     const [form] = Form.useForm();
-    const [template_feedback, setTemplateFeedback] = useState();
     let { id } = useParams();
     const history = useHistory();
-
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4
-    };
-
-    const hideModal = () => {
-        setVisible(false);
-    };
-
-    const handleJointEvent = async (id) => {
-        try {
-            await eventApi.joinEvent(id).then(response => {
-                if (response === undefined) {
-                    notification["error"]({
-                        message: `Notification`,
-                        description:
-                            'Joint Event Failed',
-
-                    });
-                }
-                else {
-                    notification["success"]({
-                        message: `Thông báo`,
-                        description:
-                            'Successfully Joint Event',
-                    });
-                    listEvent();
-                }
-            }
-            );
-
-        } catch (error) {
-            console.log('Failed to fetch event list:' + error);
-        }
-    }
-
-    const handleCancelJointEvent = async (id) => {
-        try {
-            await eventApi.cancelJoinEvent(id).then(response => {
-                if (response === undefined) {
-                    notification["error"]({
-                        message: `Notification`,
-                        description:
-                            'Cancel Join Event Failed',
-
-                    });
-                }
-                else {
-                    notification["success"]({
-                        message: `Thông báo`,
-                        description:
-                            'Successfully Cancel Joint Event',
-                    });
-                    listEvent();
-                }
-            }
-            );
-
-        } catch (error) {
-            console.log('Failed to fetch event list:' + error);
-        }
-    }
-
-    const listEvent = () => {
-        setLoading(true);
-        (async () => {
-            try {
-                const response = await eventApi.getDetailEvent(id);
-                console.log(response);
-                setEventDetail(response);
-                setLoading(false);
-
-            } catch (error) {
-                console.log('Failed to fetch event detail:' + error);
-            }
-        })();
-        window.scrollTo(0, 0);
-    }
-
-    const handleDetailEvent = (id) => {
-        history.replace("/event-detail/" + id);
-        window.location.reload();
-        window.scrollTo(0, 0);
-    }
 
     const getDataForm = async (uid) => {
         try {
             await axiosClient.get("/event/" + id + "/template_feedback/" + uid + "/question")
                 .then(response => {
                     console.log(response);
-                    setDataForm(response);
                     let tabs = [];
                     for (let i = 0; i < response.length; i++) {
                         tabs.push({
@@ -127,7 +33,6 @@ const Evaluation = () => {
                     form.setFieldsValue({
                         users: tabs
                     })
-                    setLengthForm(tabs.length)
                     const test = form.getFieldsValue("is_rating").users[0].is_rating
                     console.log(test)
                 }
@@ -151,8 +56,8 @@ const Evaluation = () => {
         let tabs = [];
         for (let i = 0; i < values.users.length; i++) {
             tabs.push({
-                scope: values.users[i]?.scope == undefined ? null : values.users[i]?.scope,
-                comment: values.users[i]?.comment == undefined ? null : values.users[i]?.comment,
+                scope: values.users[i]?.scope === undefined ? null : values.users[i]?.scope,
+                comment: values.users[i]?.comment === undefined ? null : values.users[i]?.comment,
                 question_uid: values.users[i]?.uid,
 
             })
@@ -194,23 +99,20 @@ const Evaluation = () => {
     };
 
     useEffect(() => {
-        (async () => {
-            try {
-                await eventApi.getDetailEvent(id).then((item) => {
+      (async () => {
+        try {
+          await eventApi.getDetailEvent(id).then((item) => {
+            setEventDetail(item);
+            getDataForm(item.template_feedback.uid);
+          });
 
-                    setEventDetail(item);
-                    getDataForm(item.template_feedback.uid)
-                });
-                const suggest = await eventApi.getSuggest();
-                setSuggest(suggest);
-
-                setLoading(false);
-
-            } catch (error) {
-                console.log('Failed to fetch event detail:' + error);
-            }
-        })();
-        window.scrollTo(0, 0);
+          setLoading(false);
+        } catch (error) {
+          console.log("Failed to fetch event detail:" + error);
+        }
+      })();
+      window.scrollTo(0, 0);
+      // eslint-disable-next-line
     }, [])
 
     return (
