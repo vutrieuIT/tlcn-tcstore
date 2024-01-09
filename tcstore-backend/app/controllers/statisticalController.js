@@ -27,7 +27,7 @@ const statisticalController = {
                     res.status(200).json({ data: result });
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
 
         } catch (err) {

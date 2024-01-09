@@ -31,14 +31,16 @@ const authController = {
   },
 
   login: async (req, res) => {
-    console.log(req.body);
     try {
       const user = await UserModel.findOne({ email: req.body.email });
-      console.log("resgister user", user);
       if (!user) {
         return res
           .status(400)
           .json({ message: "Unregistered account!", status: false });
+      }
+
+      if (user.status === "noactive") {
+        return res.status(403).json({ message: "account is banned" });
       }
 
       const validatePassword = await bcrypt.compareSync(
@@ -47,7 +49,9 @@ const authController = {
       );
 
       if (!validatePassword) {
-        return res.status(400).json({ message: "wrong password!", status: false });
+        return res
+          .status(400)
+          .json({ message: "wrong password!", status: false });
       }
       if (user && validatePassword) {
         const token = jwt.sign({ user: user }, _const.JWT_ACCESS_KEY, {

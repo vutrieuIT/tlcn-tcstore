@@ -102,7 +102,6 @@ const cateController = {
       
         try {
           const category = await CategoryModel.findById(categoryId);
-          console.log(category);
           if (!category) {
             return res.status(404).json({ message: 'Category not found' });
           }

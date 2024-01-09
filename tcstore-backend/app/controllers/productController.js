@@ -119,7 +119,6 @@ const productController = {
         req.headers.authorization,
         _const.JWT_ACCESS_KEY
       );
-      console.log(user);
       // Kiểm tra xem người dùng đã đặt sản phẩm này chưa
       const order = await OrderModel.findOne({
         user: decodedToken.user._id,
