@@ -106,10 +106,13 @@ function Topbar({ keyWord, setKeyWord }) {
     (async () => {
       try {
         const response = await userApi.getProfile();
-        const cart = localStorage.getItem("cartLength");
-        console.log(cart);
-        setCart(cart);
-        setUserData(response);
+        if (!response) {
+          console.log(response);
+          localStorage.removeItem("client");
+        } 
+          const cart = localStorage.getItem("cartLength");
+          setCart(cart);
+          setUserData(response);
       } catch (error) {
         console.log("Failed to fetch profile user:" + error);
       }

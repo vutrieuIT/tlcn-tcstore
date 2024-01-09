@@ -62,7 +62,6 @@ const CartHistory = () => {
         (async () => {
             try {
                 await productApi.getOrderByUser().then((item) => {
-                    console.log(item);
                     setOrderList(item);
                 });
 

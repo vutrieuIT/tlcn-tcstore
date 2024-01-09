@@ -21,7 +21,6 @@ const RegisterCustomer = () => {
   let history = useHistory();
 
   const onFinish = async (values) => {
-    console.log(values);
     try {
       const formatData = {
         email: values.email,
@@ -33,7 +32,6 @@ const RegisterCustomer = () => {
       await axiosClient
         .post("http://localhost:3100/api/auth/register", formatData)
         .then((response) => {
-          console.log(response);
           if (response === undefined) {
             notification["error"]({
               message: "Thông báo",

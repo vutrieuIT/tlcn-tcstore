@@ -138,12 +138,8 @@ const Cart = () => {
   useEffect(() => {
     (async () => {
       try {
-        // await productApi.getDetailProduct(id).then((item) => {
-        //     setProductDetail(item);
-        // });
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         setProductDetail(cart);
-        console.log(cart);
         const cartLength = localStorage.getItem("cartLength");
         setCartLength(cartLength);
         const total = cart.reduce(
