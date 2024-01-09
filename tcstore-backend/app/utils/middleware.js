@@ -15,7 +15,9 @@ module.exports = {
 
     try {
       const verified = jwt.verify(token, _const.JWT_ACCESS_KEY);
-      const user = await UserModel.findById(verified._id);
+      console.log("verified", verified);
+      const user = await UserModel.findById(verified.user._id);
+      console.log("user token", user);
       if (!user || user?.status === "noactive") {
         return res.status(403).json({ message: "account is banned" });
       }
