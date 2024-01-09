@@ -12,9 +12,6 @@ const Profile = () => {
     (async () => {
       try {
         const response = await userApi.getProfile();
-        if (!response) {
-          localStorage.removeItem("client");
-        }
         setUserData(response.user);
         setLoading(false);
       } catch (error) {

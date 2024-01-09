@@ -18,6 +18,7 @@ const ProductDetail = () => {
   const history = useHistory();
 
   const addCart = (product) => {
+    console.log(product);
     const existingItems = JSON.parse(localStorage.getItem("cart")) || [];
     let updatedItems;
     const existingItemIndex = existingItems.findIndex(
@@ -38,6 +39,7 @@ const ProductDetail = () => {
       // If product does not exist in the cart, add it to the cart
       updatedItems = [...existingItems, { ...product, quantity: 1 }];
     }
+    console.log(updatedItems.length);
     setCartLength(updatedItems.length);
     localStorage.setItem("cart", JSON.stringify(updatedItems));
     localStorage.setItem("cartLength", updatedItems.length);
@@ -45,6 +47,7 @@ const ProductDetail = () => {
   };
 
   const paymentCard = (product) => {
+    console.log(product);
     const existingItems = JSON.parse(localStorage.getItem("cart")) || [];
     let updatedItems;
     const existingItemIndex = existingItems.findIndex(
@@ -65,6 +68,7 @@ const ProductDetail = () => {
       // If product does not exist in the cart, add it to the cart
       updatedItems = [...existingItems, { ...product, quantity: 1 }];
     }
+    console.log(updatedItems.length);
     setCartLength(updatedItems.length);
     localStorage.setItem("cart", JSON.stringify(updatedItems));
     localStorage.setItem("cartLength", updatedItems.length);
@@ -75,6 +79,8 @@ const ProductDetail = () => {
 
   const handleReviewFromSubmit = async (review) => {
     try {
+      console.log("product ID", id);
+      console.log("review", review);
       await productApi.createReview(review, id);
       // Sau khi tạo review thành công, cập nhật lại danh sách đánh giá
       const updatedReview = await productApi.getReview(id);
@@ -89,6 +95,7 @@ const ProductDetail = () => {
       try {
         await productApi.getReview(id).then((item) => {
           setReview(item);
+          console.log(item);
         });
       } catch (error) {
         console.error(error);

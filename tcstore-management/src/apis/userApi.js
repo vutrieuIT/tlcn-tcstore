@@ -9,6 +9,7 @@ const userApi = {
                 password,
             })
             .then(response => {
+                console.log(response);
                 if (response.status) {
                     localStorage.setItem("token", response.token);
                 }

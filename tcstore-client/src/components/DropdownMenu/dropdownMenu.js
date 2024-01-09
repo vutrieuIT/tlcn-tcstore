@@ -11,7 +11,7 @@ import "./dropdownMenu.css";
 import userApi from "../../apis/userApi";
 
 function DropdownAvatar() {
-  const HOST_URL = process.env.REACT_APP_HOST_URL;
+    const HOST_URL = process.env.REACT_APP_HOST_URL;
   const [userData, setUserData] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -40,10 +40,6 @@ function DropdownAvatar() {
     (async () => {
       try {
         const response = await userApi.getProfile();
-        if (!response) {
-          console.log(response);
-          localStorage.removeItem("client");
-        }
         setUserData(response.user);
         const checkLogin = localStorage.getItem("client");
         if (checkLogin) {
@@ -117,7 +113,10 @@ function DropdownAvatar() {
               style={{ outline: "none", fontSize: "2px" }}
               src={
                 userData
-                  ? userData.image?.replace("http://localhost:3100", HOST_URL)
+                  ? userData.image?.replace(
+                      "http://localhost:3100",
+                      HOST_URL
+                    )
                   : "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
               }
             />
